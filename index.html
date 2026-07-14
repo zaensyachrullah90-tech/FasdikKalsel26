@@ -3,66 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V10</title>
+    <title>Drive Matrix Dashboard - Enterprise V11 (3D Fast Engine)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        /* TEMA 3D MODERN ENTERPRISE */
         body {
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090514 100%);
+            background: linear-gradient(135deg, #090514 0%, #1e1b4b 50%, #0a061c 100%);
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             overflow-x: hidden;
         }
+        
         .glass-panel {
-            background: rgba(88, 28, 135, 0.15);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 27, 75, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+
+        /* 3D Button Dynamics */
+        .btn-3d {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 0 0 rgba(0,0,0,0.5), 0 8px 15px 0 rgba(0,0,0,0.4);
+        }
+        .btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 0 rgba(0,0,0,0.5), 0 2px 4px 0 rgba(0,0,0,0.4);
+        }
+        
+        /* 3D Card Dynamics */
+        .card-3d {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 0 0 rgba(0,0,0,0.3), 0 15px 25px 0 rgba(0,0,0,0.4);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
-        .glass-card:hover {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: translateY(-2px);
+        .card-3d:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 11px 0 0 rgba(0,0,0,0.3), 0 20px 30px 0 rgba(0,0,0,0.5);
         }
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.5); border-radius: 10px; }
+
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #9333ea, #ec4899); border-radius: 10px; }
         
         .tab-active {
-            background: rgba(147, 51, 234, 0.4);
-            border-color: rgba(168, 85, 247, 0.6);
+            background: linear-gradient(to bottom, rgba(147,51,234,0.6), rgba(88,28,135,0.8));
+            border-color: rgba(168,85,247,0.8);
             color: white;
-            box-shadow: 0 4px 6px -1px rgba(88, 28, 135, 0.5);
+            box-shadow: 0 3px 0 0 rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.3);
+            transform: translateY(-2px);
         }
         .tab-inactive {
-            background: rgba(30, 27, 75, 0.5);
-            border-color: rgba(88, 28, 135, 0.3);
-            color: rgba(216, 180, 254, 0.7);
+            background: rgba(15,13,40,0.7);
+            border-color: rgba(88,28,135,0.4);
+            color: rgba(216,180,254,0.7);
+            box-shadow: 0 3px 0 0 rgba(0,0,0,0.3);
         }
+        .tab-inactive:hover { transform: translateY(-1px); }
     </style>
 </head>
 <body class="text-slate-100 min-h-screen pb-12">
 
-    <nav class="glass-panel sticky top-0 z-50 px-4 py-4 mb-6 shadow-lg">
+    <nav class="glass-panel sticky top-0 z-50 px-4 py-4 mb-6">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/50">
-                    <span class="font-bold text-xl text-white">🗂️</span>
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-700 flex items-center justify-center shadow-[0_4px_15px_rgba(147,51,234,0.5)] border-t border-white/20">
+                    <span class="font-bold text-2xl text-white drop-shadow-md">🗂️</span>
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg md:text-xl tracking-wide bg-gradient-to-r from-purple-400 to-pink-300 bg-clip-text text-transparent">DRIVE MATRIX</h1>
-                    <p class="text-[10px] sm:text-xs text-purple-300">Fasdik Smart Platform &bull; Mobile-First System</p>
+                    <h1 class="font-bold text-xl md:text-2xl tracking-wide bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-sm">DRIVE MATRIX</h1>
+                    <p class="text-xs text-purple-300/80 font-medium">Enterprise Fast Engine &bull; Zero Loading</p>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                <span id="syncBadge" class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-900/50 text-amber-300 border border-amber-700/50 transition-all">
-                    <span id="syncDot" class="w-2 h-2 mr-2 rounded-full bg-amber-400 animate-pulse"></span>
-                    <span id="syncBadgeText">Menyinkronkan Data...</span>
+                <span id="syncBadge" class="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-amber-900/60 text-amber-300 border border-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.2)] transition-all">
+                    <span id="syncDot" class="w-2 h-2 mr-2 rounded-full bg-amber-400 animate-ping"></span>
+                    <span id="syncBadgeText">Mengunduh Database...</span>
                 </span>
-                <button onclick="promptAdmin()" id="adminBtn" class="p-2 rounded-xl bg-slate-900/50 hover:bg-purple-800/50 border border-purple-700/30 transition shadow-sm" title="Login Admin">
+                <button onclick="promptAdmin()" id="adminBtn" class="btn-3d p-2.5 rounded-xl bg-slate-800 border border-slate-600 text-center" title="Login Admin">
                     <span class="text-lg">🔒</span>
                 </button>
             </div>
@@ -71,57 +90,59 @@
 
     <main class="max-w-7xl mx-auto px-4 space-y-6">
         
-        <div class="flex space-x-2 border-b border-purple-900/50 pb-4 overflow-x-auto">
-            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active">
+        <div class="flex space-x-3 border-b-2 border-purple-900/30 pb-4 overflow-x-auto pt-2 px-1">
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-active">
                 📊 Dashboard Wilayah
             </button>
-            <button onclick="switchTab('database')" id="tab-database" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
-                🔍 Smart Database Berkas
+            <button onclick="switchTab('database')" id="tab-database" class="px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive">
+                🔍 Smart Database
             </button>
-            <button onclick="switchTab('sekolah')" id="tab-sekolah" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
-                🏫 Data Sekolah Lengkap
+            <button onclick="switchTab('sekolah')" id="tab-sekolah" class="px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive">
+                🏫 Daftar Sekolah
             </button>
-            <button onclick="switchTab('history')" id="tab-history" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
-                🕒 Riwayat Upload Cerdas
+            <button onclick="switchTab('history')" id="tab-history" class="px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive">
+                🕒 Riwayat & Rentang Waktu
             </button>
         </div>
 
         <div id="view-dashboard" class="space-y-6 block animate-[fadeIn_0.3s_ease-in-out]">
-            <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="glass-panel p-4 rounded-2xl">
-                    <p class="text-xs font-medium text-purple-300 uppercase">Total Wilayah</p>
-                    <p class="text-2xl md:text-3xl font-extrabold mt-1 text-white" id="statTotal">13</p>
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="card-3d bg-slate-900/60 p-5 rounded-2xl">
+                    <p class="text-xs font-bold text-purple-400 uppercase tracking-widest">Total Wilayah</p>
+                    <p class="text-3xl md:text-4xl font-extrabold mt-2 text-white drop-shadow-md" id="statTotal">13</p>
                 </div>
-                <div class="glass-panel p-4 rounded-2xl">
-                    <p class="text-xs font-medium text-purple-300 uppercase">Total File Terdata</p>
-                    <p class="text-2xl md:text-3xl font-extrabold mt-1 text-white" id="statFiles">0</p>
+                <div class="card-3d bg-slate-900/60 p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 text-6xl opacity-10">📄</div>
+                    <p class="text-xs font-bold text-purple-400 uppercase tracking-widest">Data Murni (File)</p>
+                    <p class="text-3xl md:text-4xl font-extrabold mt-2 text-white drop-shadow-md" id="statFiles">0</p>
                 </div>
-                <div class="glass-panel p-4 rounded-2xl col-span-2 sm:col-span-1">
-                    <p class="text-xs font-medium text-purple-300 uppercase">Status Sistem</p>
-                    <p class="text-xl md:text-2xl font-bold mt-1 text-emerald-400 flex items-center">
-                        Online <span class="ml-2 w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                <div class="card-3d bg-slate-900/60 p-5 rounded-2xl col-span-2 sm:col-span-1">
+                    <p class="text-xs font-bold text-purple-400 uppercase tracking-widest">Status Engine</p>
+                    <p class="text-2xl md:text-3xl font-extrabold mt-2 text-emerald-400 flex items-center drop-shadow-md">
+                        Online <span class="ml-3 w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_10px_#34d399] animate-pulse"></span>
                     </p>
-                    <div class="text-xs text-slate-400 mt-1" id="adminStatusText">Mode Pengguna Publik</div>
+                    <div class="text-xs text-slate-400 mt-2 font-medium" id="adminStatusText">Mode Publik (Read-Only)</div>
                 </div>
             </section>
 
-            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-3 justify-between items-center">
-                <div class="w-full md:w-72 relative">
-                    <input type="text" id="searchInput" placeholder="Cari wilayah/kabupaten..." onkeyup="filterWilayah()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-3 justify-between items-center shadow-xl">
+                <div class="w-full md:w-80 relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-lg">🔎</span>
+                    <input type="text" id="searchInput" placeholder="Cari kabupaten..." onkeyup="filterWilayah()" class="w-full bg-slate-950/70 border-2 border-purple-900/50 rounded-xl pl-12 pr-4 py-3 text-sm font-bold focus:outline-none focus:border-purple-500 text-slate-100 shadow-inner transition-colors">
                 </div>
             </section>
 
-            <section class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl">
+            <section class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
-                                <th class="py-4 px-6">Nama Wilayah / Kabupaten</th>
-                                <th class="py-4 px-6 text-center">Jumlah Data File</th>
-                                <th class="py-4 px-6 text-right">Aksi Manajemen</th>
+                            <tr class="bg-gradient-to-r from-purple-950 to-indigo-950 border-b-2 border-purple-800 text-purple-200 text-xs font-extrabold uppercase tracking-wider">
+                                <th class="py-5 px-6">Nama Wilayah / Kabupaten</th>
+                                <th class="py-5 px-6 text-center">Jumlah File (Murni)</th>
+                                <th class="py-5 px-6 text-right">Aksi Pintas</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-purple-950/40 text-sm" id="tableBody">
+                        <tbody class="divide-y divide-purple-900/40 text-sm bg-slate-900/40" id="tableBody">
                             </tbody>
                     </table>
                 </div>
@@ -129,227 +150,214 @@
         </div>
 
         <div id="view-database" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
-            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
+            <section class="card-3d bg-slate-900/80 p-5 rounded-2xl flex flex-col md:flex-row gap-5 items-end border border-purple-700/30">
                 <div class="w-full md:w-1/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pilih Kabupaten (Sumber Database)</label>
+                    <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Target Database</label>
                     <div class="flex gap-2">
-                        <select id="filterKabupaten" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                        <select id="filterKabupaten" class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-purple-400 text-slate-100 shadow-inner">
                             <option value="">-- Pilih Kabupaten --</option>
                         </select>
-                        <button onclick="loadSmartFiles('database')" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white px-5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-900/50 transition-all active:scale-95 flex items-center justify-center whitespace-nowrap">
-                            🔍 Cari
+                        <button onclick="loadSmartFiles('database')" class="btn-3d bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-110 text-white px-6 rounded-xl font-extrabold text-sm flex items-center justify-center whitespace-nowrap">
+                            🔍 TAMPILKAN
                         </button>
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pencarian Nama Sekolah / Filter</label>
+                    <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Pencarian / Smart Filter</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">🔍</span>
-                        <input type="text" id="searchBerkas" onkeyup="renderSmartFiles()" placeholder="Ketik sekolah, tahun (2024, 2026), bulan, atau tahap..." class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200 font-bold">
-                        <button onclick="setFilter('')" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-white" title="Hapus Filter">✖</button>
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-lg">⚡</span>
+                        <input type="text" id="searchBerkas" onkeyup="renderSmartFiles()" placeholder="Ketik nama file, sekolah, tahap, atau tahun..." class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl pl-12 pr-12 py-3 text-sm focus:outline-none focus:border-purple-400 text-slate-100 font-bold shadow-inner transition-colors">
+                        <button onclick="setFilter('')" class="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-500 hover:text-red-400 text-lg transition-colors" title="Bersihkan Pencarian">✖</button>
                     </div>
                 </div>
             </section>
 
-            <div id="loadingScanner" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
-                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Database Berkas...</p>
-            </div>
-
-            <section id="smartSummaryPanel" class="hidden glass-panel p-5 rounded-2xl">
-                <div class="font-bold text-amber-400 mb-3 text-sm flex items-center">
-                    <span class="mr-2">📊</span> Rincian File Aktual <span class="text-slate-400 ml-1 font-normal">(Klik tombol di bawah untuk Smart Filter)</span>
+            <section id="smartSummaryPanel" class="hidden card-3d bg-slate-900/60 p-5 rounded-2xl border border-amber-900/30">
+                <div class="font-extrabold text-amber-400 mb-3 text-sm flex items-center tracking-wide">
+                    <span class="mr-2 text-lg">🎛️</span> PANEL FILTER CEPAT <span class="text-slate-500 ml-2 font-medium normal-case">(Klik tombol untuk menyaring)</span>
                 </div>
-                <div id="summaryContainer" class="flex flex-wrap gap-2.5">
+                <div id="summaryContainer" class="flex flex-wrap gap-3">
                     </div>
             </section>
 
-            <section id="smartTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
+            <section id="smartTableSection" class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30 hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
-                                <th class="py-4 px-6 w-1/2">Nama Folder / File (Teks Lengkap)</th>
-                                <th class="py-4 px-6">Kategori Cerdas</th>
-                                <th class="py-4 px-6 text-right">Aksi Buka / Unduh</th>
+                            <tr class="bg-gradient-to-r from-purple-950 to-indigo-950 border-b-2 border-purple-800 text-purple-200 text-xs font-extrabold uppercase tracking-wider">
+                                <th class="py-5 px-6 w-1/2">Nama Folder / File (Full Text)</th>
+                                <th class="py-5 px-6">Identifikasi Cerdas</th>
+                                <th class="py-5 px-6 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-purple-950/40 text-sm" id="berkasBody">
+                        <tbody class="divide-y divide-purple-900/40 text-sm bg-slate-900/40" id="berkasBody">
                             </tbody>
                     </table>
                 </div>
                 
-                <div id="emptyBerkas" class="hidden p-8 text-center">
-                    <span class="text-4xl">📂</span>
-                    <p class="text-slate-400 mt-2 text-sm font-medium">Belum ada file / Tidak ditemukan berdasarkan filter</p>
+                <div id="emptyBerkas" class="hidden p-12 text-center">
+                    <div class="text-6xl mb-4 opacity-50">📂</div>
+                    <p class="text-slate-300 font-bold text-lg">Tidak ada data ditemukan</p>
+                    <p class="text-slate-500 text-sm mt-1">Coba ubah kata kunci filter Anda.</p>
                 </div>
             </section>
         </div>
 
         <div id="view-sekolah" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
-            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
+            <section class="card-3d bg-slate-900/80 p-5 rounded-2xl flex flex-col md:flex-row gap-5 items-end border border-purple-700/30">
                 <div class="w-full md:w-1/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pilih Kabupaten (List Sekolah)</label>
+                    <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Target Wilayah</label>
                     <div class="flex gap-2">
-                        <select id="filterKabSekolah" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                        <select id="filterKabSekolah" class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-purple-400 text-slate-100 shadow-inner">
                             <option value="">-- Pilih Kabupaten --</option>
                         </select>
-                        <button onclick="loadSmartFiles('sekolah')" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white px-5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-900/50 transition-all active:scale-95 flex items-center justify-center whitespace-nowrap">
-                            🔍 Cari
+                        <button onclick="loadSmartFiles('sekolah')" class="btn-3d bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-110 text-white px-6 rounded-xl font-extrabold text-sm flex items-center justify-center whitespace-nowrap">
+                            🔍 LOAD
                         </button>
                     </div>
                 </div>
                 <div class="w-full md:w-2/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pencarian Nama Sekolah</label>
+                    <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Pencarian Nama Instansi</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">🔍</span>
-                        <input type="text" id="searchSekolah" onkeyup="renderSekolahData()" placeholder="Cari sekolah spesifik..." class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400 text-lg">🏢</span>
+                        <input type="text" id="searchSekolah" onkeyup="renderSekolahData()" placeholder="Ketik SDN, SMPN, atau MAN..." class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:border-purple-400 text-slate-100 font-bold shadow-inner transition-colors">
                     </div>
                 </div>
             </section>
 
-            <div id="loadingSekolah" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
-                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menghimpun Data Sekolah...</p>
-            </div>
-
-            <section id="sekolahTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
+            <section id="sekolahTableSection" class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30 hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
-                                <th class="py-4 px-6 w-2/3">Nama Sekolah / Instansi</th>
-                                <th class="py-4 px-6 text-center">Jumlah File Aktif</th>
-                                <th class="py-4 px-6 text-right">Aksi Filter</th>
+                            <tr class="bg-gradient-to-r from-purple-950 to-indigo-950 border-b-2 border-purple-800 text-purple-200 text-xs font-extrabold uppercase tracking-wider">
+                                <th class="py-5 px-6 w-2/3">Nama Lengkap Instansi / Sekolah</th>
+                                <th class="py-5 px-6 text-center">Data Tersimpan</th>
+                                <th class="py-5 px-6 text-right">Tindakan</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-purple-950/40 text-sm" id="sekolahBody">
+                        <tbody class="divide-y divide-purple-900/40 text-sm bg-slate-900/40" id="sekolahBody">
                             </tbody>
                     </table>
                 </div>
                 
-                <div id="emptySekolah" class="hidden p-8 text-center">
-                    <span class="text-4xl">🏢</span>
-                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada data sekolah terdeteksi di wilayah ini.</p>
+                <div id="emptySekolah" class="hidden p-12 text-center">
+                    <div class="text-6xl mb-4 opacity-50">🏫</div>
+                    <p class="text-slate-300 font-bold text-lg">Instansi tidak ditemukan</p>
                 </div>
             </section>
         </div>
 
         <div id="view-history" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
-            <section class="glass-panel p-4 rounded-2xl space-y-4 shadow-xl border border-purple-800/30">
-                <div class="flex flex-col md:flex-row gap-4 items-end">
+            <section class="card-3d bg-slate-900/80 p-5 rounded-2xl space-y-5 border border-purple-700/30">
+                <div class="flex flex-col md:flex-row gap-5 items-end">
                     <div class="w-full md:w-1/3">
-                        <label class="text-xs text-purple-300 font-semibold mb-1 block">Kabupaten (Sumber Riwayat)</label>
+                        <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Target Riwayat</label>
                         <div class="flex gap-2">
-                            <select id="filterKabHistory" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                            <select id="filterKabHistory" class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl px-4 py-3 text-sm font-bold focus:outline-none focus:border-purple-400 text-slate-100 shadow-inner">
                                 <option value="">-- Pilih Kabupaten --</option>
                             </select>
-                            <button onclick="loadSmartFiles('history')" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white px-5 rounded-xl font-bold text-sm shadow-lg shadow-emerald-900/50 transition-all active:scale-95 flex items-center justify-center whitespace-nowrap">
-                                🔍 Cari
+                            <button onclick="loadSmartFiles('history')" class="btn-3d bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-110 text-white px-6 rounded-xl font-extrabold text-sm flex items-center justify-center whitespace-nowrap">
+                                🔍 TARIK
                             </button>
                         </div>
                     </div>
                     
-                    <div class="w-full md:w-2/3 flex flex-col sm:flex-row gap-2">
+                    <div class="w-full md:w-2/3 flex flex-col sm:flex-row gap-3">
                         <div class="w-full">
-                            <label class="text-xs text-purple-300 font-semibold mb-1 block">Dari Tanggal</label>
-                            <input type="date" id="historyStartDate" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                            <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Dari Tanggal</label>
+                            <input type="date" id="historyStartDate" onchange="renderHistoryData()" class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-400 text-slate-100 font-bold shadow-inner">
                         </div>
-                        <div class="w-full flex items-center gap-2">
-                            <div class="w-full">
-                                <label class="text-xs text-purple-300 font-semibold mb-1 block">Sampai Tanggal</label>
-                                <input type="date" id="historyEndDate" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
-                            </div>
+                        <div class="w-full">
+                            <label class="text-xs text-purple-300 font-bold mb-2 block uppercase tracking-wider">Sampai Tanggal</label>
+                            <input type="date" id="historyEndDate" onchange="renderHistoryData()" class="w-full bg-slate-950 border-2 border-purple-800/60 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-purple-400 text-slate-100 font-bold shadow-inner">
                         </div>
                     </div>
 
                     <div class="w-full md:w-1/4">
-                        <div class="bg-purple-900/40 border border-purple-700/50 rounded-xl px-4 py-2 text-center h-[62px] flex flex-col justify-center shadow-inner">
-                            <span class="text-2xl font-bold text-amber-400 leading-none" id="historyCount">0</span>
-                            <span class="text-[10px] text-purple-200 mt-0.5">File Ditemukan</span>
+                        <div class="bg-slate-950 border-2 border-amber-700/50 rounded-xl px-4 py-2 text-center h-[46px] flex flex-col justify-center shadow-inner relative overflow-hidden">
+                            <div class="absolute inset-0 bg-amber-500/10"></div>
+                            <span class="text-2xl font-black text-amber-400 leading-none relative z-10" id="historyCount">0</span>
                         </div>
+                        <label class="text-[10px] text-center w-full text-slate-400 font-bold mt-2 block uppercase">File Ditemukan</label>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-purple-900/40">
-                    <span class="text-[11px] font-semibold text-slate-400 mr-1">Filter Instan:</span>
-                    <button onclick="setQuickDate(1)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition shadow-sm active:scale-95">1 Hari</button>
-                    <button onclick="setQuickDate(3)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition shadow-sm active:scale-95">3 Hari</button>
-                    <button onclick="setQuickDate(7)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition shadow-sm active:scale-95">7 Hari</button>
-                    <button onclick="setQuickDate(30)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition shadow-sm active:scale-95">1 Bulan</button>
+                <div class="flex flex-wrap items-center gap-3 pt-4 border-t-2 border-purple-900/50">
+                    <span class="text-xs font-bold text-slate-400 mr-1 uppercase">Pintas:</span>
+                    <button onclick="setQuickDate(1)" class="btn-3d px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-bold text-slate-200 hover:bg-purple-700 hover:border-purple-500 transition-colors">1 Hari</button>
+                    <button onclick="setQuickDate(3)" class="btn-3d px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-bold text-slate-200 hover:bg-purple-700 hover:border-purple-500 transition-colors">3 Hari</button>
+                    <button onclick="setQuickDate(7)" class="btn-3d px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-bold text-slate-200 hover:bg-purple-700 hover:border-purple-500 transition-colors">7 Hari</button>
+                    <button onclick="setQuickDate(30)" class="btn-3d px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-xl text-xs font-bold text-slate-200 hover:bg-purple-700 hover:border-purple-500 transition-colors">1 Bulan</button>
                     <div class="flex-grow"></div>
-                    <button onclick="clearDateFilter()" class="px-3 py-1 bg-slate-950 hover:bg-red-900/40 border border-slate-700 hover:border-red-500/50 rounded-lg text-xs font-semibold text-slate-400 hover:text-red-300 transition active:scale-95">✖ Reset Tanggal</button>
+                    <button onclick="clearDateFilter()" class="btn-3d px-4 py-1.5 bg-red-950/40 border border-red-800 rounded-xl text-xs font-bold text-red-300 hover:bg-red-800 transition-colors">✖ Reset Waktu</button>
                 </div>
             </section>
 
-            <div id="loadingHistory" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
-                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Data Riwayat...</p>
-            </div>
-
-            <section id="historyTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
+            <section id="historyTableSection" class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30 hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
-                                <th class="py-4 px-6 w-1/2">Nama File & Informasi</th>
-                                <th class="py-4 px-6 text-center">Waktu Upload (WITA)</th>
-                                <th class="py-4 px-6 text-right">Aksi Cepat</th>
+                            <tr class="bg-gradient-to-r from-purple-950 to-indigo-950 border-b-2 border-purple-800 text-purple-200 text-xs font-extrabold uppercase tracking-wider">
+                                <th class="py-5 px-6 w-1/2">Nama File & Deskripsi</th>
+                                <th class="py-5 px-6 text-center">Waktu Upload (WITA)</th>
+                                <th class="py-5 px-6 text-right">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-purple-950/40 text-sm" id="historyBody">
+                        <tbody class="divide-y divide-purple-900/40 text-sm bg-slate-900/40" id="historyBody">
                             </tbody>
                     </table>
                 </div>
                 
-                <div id="emptyHistory" class="hidden p-8 text-center">
-                    <span class="text-4xl">🕒</span>
-                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada riwayat file pada rentang tanggal ini.</p>
+                <div id="emptyHistory" class="hidden p-12 text-center">
+                    <div class="text-6xl mb-4 opacity-50">🕒</div>
+                    <p class="text-slate-300 font-bold text-lg">Tidak ada aktivitas pada tanggal ini</p>
                 </div>
             </section>
         </div>
 
     </main>
 
-    <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
-            <button onclick="toggleModal('editModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
-            <h3 class="font-bold text-lg text-amber-400 flex items-center"><span class="mr-2">🔓</span> Edit Link Drive</h3>
-            <p class="text-xs text-slate-400 mb-2">Ubah link Google Drive untuk <span id="editWilayahName" class="font-bold text-white"></span></p>
+    <div id="editModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="card-3d bg-slate-900 border border-purple-700/50 w-full max-w-md rounded-3xl p-7 space-y-5 relative">
+            <button onclick="toggleModal('editModal')" class="absolute top-5 right-5 text-slate-500 hover:text-white text-2xl font-bold transition">&times;</button>
+            <h3 class="font-extrabold text-xl text-amber-400 flex items-center"><span class="mr-3 text-2xl">🔓</span> Edit Tautan Drive</h3>
+            <p class="text-sm text-slate-400 mb-2">Pembaruan link untuk <span id="editWilayahName" class="font-bold text-white"></span></p>
             <input type="hidden" id="editRowId">
-            <div class="space-y-1">
-                <label class="text-xs font-semibold text-purple-300">URL Link Baru:</label>
-                <input type="text" id="editUrlInput" class="w-full bg-slate-900/80 border border-purple-700/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 text-slate-200">
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-purple-300 uppercase">URL / Link Target Baru:</label>
+                <input type="text" id="editUrlInput" class="w-full bg-slate-950 border-2 border-purple-700/50 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:border-amber-500 text-slate-100 font-medium">
             </div>
-            <button onclick="saveEditedLink()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-sm shadow-lg shadow-orange-600/30 hover:opacity-90 transition mt-2">Simpan Perubahan & Sync DB</button>
+            <button onclick="saveEditedLink()" class="btn-3d w-full py-4 rounded-xl bg-gradient-to-t from-amber-600 to-orange-400 text-white font-extrabold text-sm mt-4">SIMPAN & SINKRONISASI ⚡</button>
         </div>
     </div>
 
-    <div id="uploadModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
-            <button onclick="toggleModal('uploadModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
-            <h3 class="font-bold text-lg text-purple-300" id="modalTitle">Upload Berkas Wilayah</h3>
-            <p class="text-xs text-slate-400">Berkas akan terlempar ke direktori Google Drive wilayah target.</p>
-            <div class="border-2 border-dashed border-purple-700/40 rounded-2xl p-6 text-center bg-slate-900/40 cursor-pointer hover:border-purple-500 transition relative">
-                <span class="text-3xl block mb-2">📥</span>
-                <span class="text-xs text-purple-200 font-medium block">Pilih File atau Seret Kesini</span>
-                <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+    <div id="uploadModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="card-3d bg-slate-900 border border-purple-700/50 w-full max-w-md rounded-3xl p-7 space-y-5 relative">
+            <button onclick="toggleModal('uploadModal')" class="absolute top-5 right-5 text-slate-500 hover:text-white text-2xl font-bold transition">&times;</button>
+            <h3 class="font-extrabold text-xl text-purple-300 flex items-center"><span class="mr-3 text-2xl">📤</span> Form Upload</h3>
+            <p class="text-sm text-slate-400">Pilih berkas yang akan dilempar ke Google Drive tujuan.</p>
+            <div class="border-2 border-dashed border-purple-500/50 rounded-2xl p-8 text-center bg-slate-950/50 cursor-pointer hover:border-purple-400 transition relative overflow-hidden group">
+                <div class="absolute inset-0 bg-purple-500/5 group-hover:bg-purple-500/10 transition"></div>
+                <span class="text-4xl block mb-3 relative z-10">📥</span>
+                <span class="text-sm text-purple-200 font-bold block relative z-10">Pilih / Drop File Disini</span>
+                <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
             </div>
-            <button onclick="toggleModal('uploadModal'); showToast('Upload Berhasil!');" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-sm shadow-lg hover:opacity-90 transition">Mulai Kirim ke Google Drive</button>
+            <button onclick="toggleModal('uploadModal'); showToast('Upload Berhasil Diproses!');" class="btn-3d w-full py-4 rounded-xl bg-gradient-to-t from-purple-700 to-indigo-500 text-white font-extrabold text-sm">MULAI UPLOAD 🚀</button>
         </div>
     </div>
 
-    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-emerald-900/50 font-medium text-sm flex items-center">
-        <span class="mr-2">✅</span> <span id="toastMsg">Tersimpan</span>
+    <div id="toast" class="fixed bottom-8 right-8 transform translate-y-24 opacity-0 transition-all duration-300 z-50 bg-emerald-600 border-2 border-emerald-400 text-white px-6 py-4 rounded-2xl shadow-[0_10px_30px_rgba(16,185,129,0.4)] font-bold text-sm flex items-center">
+        <span class="mr-3 text-lg">✅</span> <span id="toastMsg">Tersimpan</span>
     </div>
 
     <script>
         // ==========================================
-        // GANTI BAGIAN INI DENGAN URL WEB APP GAS ANDA
+        // GANTI DENGAN URL WEB APP GAS ANDA (DEPLOY BARU V11)
         // ==========================================
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzJ8moC1T6BYb-Q8DwPvHy5TFl_7CrPTJX62vCyhfuca4WSHcg9E7d2TwICbPxITEwI/exec"; 
 
         let driveData = [];
+        window.GLOBAL_DB = {}; // SINGLE SOURCE OF TRUTH (0-LOADING ENGINE)
         let activeFilesData = []; 
         let isAdmin = false;
 
@@ -359,13 +367,13 @@
             document.getElementById('view-sekolah').classList.add('hidden');
             document.getElementById('view-history').classList.add('hidden'); 
 
-            document.getElementById('tab-dashboard').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
-            document.getElementById('tab-database').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
-            document.getElementById('tab-sekolah').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
-            document.getElementById('tab-history').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
+            document.getElementById('tab-dashboard').className = "px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive";
+            document.getElementById('tab-database').className = "px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive";
+            document.getElementById('tab-sekolah').className = "px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive";
+            document.getElementById('tab-history').className = "px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-inactive";
             
             document.getElementById('view-' + tab).classList.remove('hidden');
-            document.getElementById('tab-' + tab).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active";
+            document.getElementById('tab-' + tab).className = "px-6 py-3 rounded-xl font-bold text-sm transition-all whitespace-nowrap tab-active";
             
             localStorage.setItem('activeViewTab', tab);
         }
@@ -374,7 +382,7 @@
             if (isAdmin) {
                 isAdmin = false;
                 document.getElementById('adminBtn').innerHTML = '<span class="text-lg">🔒</span>';
-                document.getElementById('adminStatusText').innerText = "Mode Pengguna Publik";
+                document.getElementById('adminStatusText').innerText = "Mode Publik (Read-Only)";
                 document.getElementById('adminStatusText').classList.replace('text-amber-400', 'text-slate-400');
                 showToast("Admin Logout Berhasil");
                 renderWilayah();
@@ -384,7 +392,7 @@
             if (pwd === "VerifKalsel123") {
                 isAdmin = true;
                 document.getElementById('adminBtn').innerHTML = '<span class="text-lg">🔓</span>';
-                document.getElementById('adminStatusText').innerText = "Mode Admin Akses Penuh";
+                document.getElementById('adminStatusText').innerText = "Mode Admin (Akses Penuh)";
                 document.getElementById('adminStatusText').classList.replace('text-slate-400', 'text-amber-400');
                 showToast("Akses Admin Terbuka");
                 renderWilayah();
@@ -402,28 +410,28 @@
             tbody.innerHTML = filtered.map(item => {
                 totalFilesAll += (item.count || 0); 
                 return `
-                <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20">
-                    <td class="py-4 px-6 font-medium text-slate-200">
-                        <div class="font-semibold text-sm flex items-center gap-2">
-                            ${item.name}
-                            ${isAdmin ? `<button onclick="openEdit(${item.id})" class="text-amber-500 hover:text-amber-300 text-[10px] bg-amber-900/30 px-2 py-0.5 rounded-full transition">✏️ Edit Link</button>` : ''}
+                <tr class="hover:bg-purple-900/20 transition border-b border-purple-800/30">
+                    <td class="py-4 px-6 font-bold text-slate-100">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">📁</span> ${item.name}
+                            ${isAdmin ? `<button onclick="openEdit(${item.id})" class="text-amber-400 hover:text-amber-200 text-[10px] bg-amber-900/40 border border-amber-700 px-2 py-0.5 rounded-full transition ml-2">✏️ Edit</button>` : ''}
                         </div>
-                        <div class="text-[11px] text-slate-400 mt-0.5 flex items-center gap-2">
-                            <span class="${item.status === 'Ready' ? 'text-emerald-400' : 'text-amber-400'} border border-slate-700 px-1 rounded bg-slate-800">${item.status}</span>
-                            <span class="truncate max-w-[200px] sm:max-w-md">${item.url}</span>
+                        <div class="text-[11px] text-slate-400 mt-1 flex items-center gap-2">
+                            <span class="font-bold px-1.5 py-0.5 rounded uppercase ${item.status === 'Ready' ? 'bg-emerald-900/60 text-emerald-400 border border-emerald-700/50' : 'bg-amber-900/60 text-amber-400 border border-amber-700/50'}">${item.status}</span>
+                            <span class="truncate max-w-[200px] sm:max-w-md ml-1 opacity-70">${item.url}</span>
                         </div>
                     </td>
                     <td class="py-4 px-6 text-center">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-purple-200 border border-purple-700 shadow-inner">
-                            📄 ${item.count || 0} File (Dokumen)
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black bg-slate-950 border-2 border-purple-800 shadow-inner text-purple-200">
+                            📄 ${item.count || 0}
                         </span>
                     </td>
-                    <td class="py-4 px-6 text-right space-x-2">
-                        <button onclick="scanDirect('${item.folderId}', '${item.name}')" class="inline-flex items-center px-3 py-1.5 bg-blue-900/40 hover:bg-blue-800 text-blue-200 rounded-lg text-xs font-semibold transition border border-blue-700/30 shadow-md">
-                            🔍 <span class="hidden sm:inline ml-1">Buka DB</span>
+                    <td class="py-4 px-6 text-right space-x-2 whitespace-nowrap">
+                        <button onclick="scanDirect('${item.folderId}', '${item.name}')" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-blue-700 to-indigo-500 text-white rounded-xl text-xs font-extrabold transition">
+                            🔍 BUKA DB
                         </button>
-                        <button onclick="openUpload('${item.name}')" class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white rounded-lg text-xs font-semibold transition shadow-md">
-                            📤 <span class="hidden sm:inline ml-1">Upload File</span>
+                        <button onclick="openUpload('${item.name}')" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-fuchsia-500 text-white rounded-xl text-xs font-extrabold transition">
+                            📤 UPLOAD
                         </button>
                     </td>
                 </tr>
@@ -456,9 +464,9 @@
             const selectSekolah = document.getElementById('filterKabSekolah');
             const selectHist = document.getElementById('filterKabHistory');
             
-            selectDB.innerHTML = '<option value="">-- Pilih Kabupaten --</option>';
-            selectSekolah.innerHTML = '<option value="">-- Pilih Kabupaten --</option>';
-            selectHist.innerHTML = '<option value="">-- Pilih Kabupaten --</option>';
+            selectDB.innerHTML = '<option value="">-- Pilih Kabupaten (Target) --</option>';
+            selectSekolah.innerHTML = '<option value="">-- Pilih Kabupaten (Target) --</option>';
+            selectHist.innerHTML = '<option value="">-- Pilih Kabupaten (Target) --</option>';
             
             driveData.forEach(item => {
                 const opt = `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
@@ -469,7 +477,7 @@
         }
 
         // ==============================================
-        // CORE: MULTI-TAB DATA LOADER (CENTRALIZED CACHE V10)
+        // CORE: MULTI-TAB ZERO LOADING ENGINE (V11)
         // ==============================================
         function loadSmartFiles(callerTab) {
             let selectId = 'filterKabupaten';
@@ -482,45 +490,41 @@
             document.getElementById('filterKabSekolah').value = val;
             document.getElementById('filterKabHistory').value = val;
 
-            const tableSectionDB = document.getElementById('smartTableSection');
-            const loaderDB = document.getElementById('loadingScanner');
-            const summaryPanel = document.getElementById('smartSummaryPanel');
-
-            const tableSectionSek = document.getElementById('sekolahTableSection');
-            const loaderSek = document.getElementById('loadingSekolah');
-
-            const tableSectionHist = document.getElementById('historyTableSection');
-            const loaderHist = document.getElementById('loadingHistory');
-            
             if(!val) {
-                if(callerTab === 'database') { tableSectionDB.classList.add('hidden'); summaryPanel.classList.add('hidden'); loaderDB.classList.add('hidden'); }
-                if(callerTab === 'sekolah') { tableSectionSek.classList.add('hidden'); loaderSek.classList.add('hidden'); }
-                if(callerTab === 'history') { tableSectionHist.classList.add('hidden'); loaderHist.classList.add('hidden'); document.getElementById('historyCount').innerText = "0"; }
+                if(callerTab === 'database') { document.getElementById('smartTableSection').classList.add('hidden'); document.getElementById('smartSummaryPanel').classList.add('hidden'); }
+                if(callerTab === 'sekolah') { document.getElementById('sekolahTableSection').classList.add('hidden'); }
+                if(callerTab === 'history') { document.getElementById('historyTableSection').classList.add('hidden'); document.getElementById('historyCount').innerText = "0"; }
                 return;
             }
 
             const [folderId, kabName] = val.split('|');
             sessionStorage.setItem('lastKabupaten', val);
 
-            const cachedData = sessionStorage.getItem(`cache_v10_${folderId}`);
-            
+            // BACA DARI MEMORI GLOBAL (DIJAMIN 0 DETIK LOADING JIKA SUDAH DISYNC BACKGROUND)
+            if (window.GLOBAL_DB[folderId]) {
+                activeFilesData = window.GLOBAL_DB[folderId];
+                renderAllActiveTabs(callerTab);
+                return;
+            }
+
+            // FALLBACK KE CACHE SESSION JIKA GLOBAL_DB KOSONG (Misal habis hard refresh)
+            const cachedData = sessionStorage.getItem(`cache_v11_${folderId}`);
             if (cachedData) {
                 activeFilesData = JSON.parse(cachedData);
-                hideLoaders(callerTab);
+                window.GLOBAL_DB[folderId] = activeFilesData; // Masukkan memori
                 renderAllActiveTabs(callerTab);
-                showToast("⚡ Data dimuat instan!");
                 return;
             }
             
-            showLoaders(callerTab);
-
+            // JIKA BELUM ADA SAMA SEKALI (Fetch Manual)
+            showToast("⏳ Mengunduh untuk pertama kali...");
             fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
                 .then(res => res.json())
                 .then(res => {
-                    hideLoaders(callerTab);
                     if(res.status === 'success') {
                         activeFilesData = res.data;
-                        sessionStorage.setItem(`cache_v10_${folderId}`, JSON.stringify(res.data));
+                        window.GLOBAL_DB[folderId] = res.data;
+                        try { sessionStorage.setItem(`cache_v11_${folderId}`, JSON.stringify(res.data)); } catch(e){}
                         
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
                         if(kabIndex > -1) driveData[kabIndex].count = res.total;
@@ -528,37 +532,25 @@
 
                         renderAllActiveTabs(callerTab);
                     }
-                }).catch(e => {
-                    alert("Gagal memindai folder Google Drive.");
-                    hideLoaders(callerTab);
-                });
-        }
-
-        function showLoaders(tab) {
-            if(tab === 'database') { document.getElementById('smartTableSection').classList.add('hidden'); document.getElementById('smartSummaryPanel').classList.add('hidden'); document.getElementById('loadingScanner').classList.remove('hidden'); }
-            if(tab === 'sekolah') { document.getElementById('sekolahTableSection').classList.add('hidden'); document.getElementById('loadingSekolah').classList.remove('hidden'); }
-            if(tab === 'history') { document.getElementById('historyTableSection').classList.add('hidden'); document.getElementById('loadingHistory').classList.remove('hidden'); document.getElementById('historyCount').innerText = "0"; }
-        }
-
-        function hideLoaders(tab) {
-            if(tab === 'database') { document.getElementById('smartTableSection').classList.remove('hidden'); document.getElementById('loadingScanner').classList.add('hidden'); }
-            if(tab === 'sekolah') { document.getElementById('sekolahTableSection').classList.remove('hidden'); document.getElementById('loadingSekolah').classList.add('hidden'); }
-            if(tab === 'history') { document.getElementById('historyTableSection').classList.remove('hidden'); document.getElementById('loadingHistory').classList.add('hidden'); }
+                }).catch(e => { alert("Gagal memindai Drive."); });
         }
 
         function renderAllActiveTabs(tab) {
             if (tab === 'database') {
+                document.getElementById('smartTableSection').classList.remove('hidden');
                 renderSmartSummary(activeFilesData);
                 renderSmartFiles();
             } else if (tab === 'sekolah') {
+                document.getElementById('sekolahTableSection').classList.remove('hidden');
                 renderSekolahData();
             } else if (tab === 'history') {
+                document.getElementById('historyTableSection').classList.remove('hidden');
                 renderHistoryData();
             }
         }
 
         // ==============================================
-        // LOGIKA TAB DATABASE CERDAS
+        // TAB DATABASE
         // ==============================================
         function setFilter(keyword) {
             document.getElementById('searchBerkas').value = keyword;
@@ -584,23 +576,23 @@
                 if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; 
             });
             
-            let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total File (${filesOnly.length})</button>`;
+            let html = `<button onclick="setFilter('')" class="btn-3d px-4 py-2 bg-gradient-to-t from-purple-800 to-indigo-600 rounded-xl text-white font-extrabold shadow-md flex items-center"><span class="mr-2">📁</span> Total File: ${filesOnly.length}</button>`;
             
-            for (let t in counts.tahap) html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
-            for (let b in counts.bulan) html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
-            for (let th in counts.tahun) html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
+            for (let t in counts.tahap) html += `<button onclick="setFilter('${t}')" class="btn-3d px-4 py-2 bg-emerald-950 border border-emerald-600 rounded-xl text-emerald-300 font-bold hover:bg-emerald-800 transition shadow flex items-center"><span class="mr-2">✅</span> ${t} <span class="ml-2 bg-emerald-900 px-2 py-0.5 rounded-lg text-[10px]">${counts.tahap[t]}</span></button>`;
+            for (let b in counts.bulan) html += `<button onclick="setFilter('${b}')" class="btn-3d px-4 py-2 bg-blue-950 border border-blue-600 rounded-xl text-blue-300 font-bold hover:bg-blue-800 transition shadow flex items-center"><span class="mr-2">📅</span> ${b} <span class="ml-2 bg-blue-900 px-2 py-0.5 rounded-lg text-[10px]">${counts.bulan[b]}</span></button>`;
+            for (let th in counts.tahun) html += `<button onclick="setFilter('${th}')" class="btn-3d px-4 py-2 bg-amber-950 border border-amber-600 rounded-xl text-amber-300 font-bold hover:bg-amber-800 transition shadow flex items-center"><span class="mr-2">🗓️</span> ${th} <span class="ml-2 bg-amber-900 px-2 py-0.5 rounded-lg text-[10px]">${counts.tahun[th]}</span></button>`;
             
             container.innerHTML = html;
         }
 
         function getFileIconStyle(format) {
             switch(format) {
-                case 'FOLDER': return { icon: '🗂️', color: 'text-amber-400 bg-amber-950/50 border-amber-800' };
-                case 'PDF': return { icon: '📄', color: 'text-red-400 bg-red-950/50 border-red-800' };
-                case 'JPG': case 'PNG': return { icon: '🖼️', color: 'text-blue-400 bg-blue-950/50 border-blue-800' };
-                case 'EXCEL': return { icon: '📊', color: 'text-emerald-400 bg-emerald-950/50 border-emerald-800' };
-                case 'WORD': return { icon: '📝', color: 'text-blue-400 bg-blue-950/50 border-blue-800' };
-                default: return { icon: '📁', color: 'text-slate-400 bg-slate-800 border-slate-700' };
+                case 'FOLDER': return { icon: '🗂️', color: 'text-amber-300 bg-amber-950/60 border-amber-700/50' };
+                case 'PDF': return { icon: '📄', color: 'text-red-300 bg-red-950/60 border-red-700/50' };
+                case 'JPG': case 'PNG': return { icon: '🖼️', color: 'text-blue-300 bg-blue-950/60 border-blue-700/50' };
+                case 'EXCEL': return { icon: '📊', color: 'text-emerald-300 bg-emerald-950/60 border-emerald-700/50' };
+                case 'WORD': return { icon: '📝', color: 'text-blue-300 bg-blue-950/60 border-blue-700/50' };
+                default: return { icon: '📁', color: 'text-slate-300 bg-slate-800 border-slate-600' };
             }
         }
 
@@ -630,37 +622,37 @@
                     const downloadLink = item.id ? `https://drive.google.com/uc?export=download&id=${item.id}` : item.url;
 
                     return `
-                    <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20 ${isFolder ? 'bg-amber-950/10' : ''}">
-                        <td class="py-3 px-6">
-                            <div class="flex items-start space-x-3">
-                                <span class="text-2xl mt-1">${style.icon}</span>
+                    <tr class="hover:bg-purple-900/30 transition border-b border-purple-800/30 ${isFolder ? 'bg-amber-950/10' : ''}">
+                        <td class="py-4 px-6">
+                            <div class="flex items-start space-x-4">
+                                <span class="text-3xl mt-0.5 drop-shadow-md">${style.icon}</span>
                                 <div class="w-full">
-                                    <div class="${isFolder ? 'font-bold text-amber-300' : 'font-semibold text-slate-100'} text-sm break-words whitespace-normal tracking-wide leading-relaxed">${item.namaFile}</div>
-                                    <div class="text-[11px] text-slate-400 mt-1 flex items-center space-x-2">
-                                        <span class="px-1.5 py-0.5 rounded border ${style.color} text-[9px] font-bold uppercase tracking-widest">${item.format}</span>
-                                        ${item.path ? `<span class="text-slate-500 line-clamp-1" title="${item.path}">📁 ${item.path}</span>` : ''}
+                                    <div class="${isFolder ? 'font-extrabold text-amber-400' : 'font-bold text-slate-100'} text-[13px] break-words whitespace-normal leading-relaxed">${item.namaFile}</div>
+                                    <div class="text-[11px] text-slate-400 mt-2 flex items-center space-x-2">
+                                        <span class="px-2 py-0.5 rounded border ${style.color} text-[10px] font-black uppercase tracking-widest">${item.format}</span>
+                                        ${item.path ? `<span class="text-slate-500 font-medium line-clamp-1">📁 ${item.path}</span>` : ''}
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 px-6">
-                            <div class="space-y-1">
-                                <div class="text-xs font-bold text-purple-300">🏢 ${item.sekolah}</div>
-                                <div class="flex flex-wrap gap-1 mt-1">
-                                    ${item.tahap && item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50 text-[10px] text-emerald-200 font-bold">✅ ${item.tahap}</span>` : ''}
-                                    ${item.bulan && item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/50 text-[10px] text-blue-200 font-bold">📅 ${item.bulan}</span>` : ''}
-                                    ${item.tahun && item.tahun !== '-' ? `<span class="px-2 py-0.5 rounded bg-amber-900/60 border border-amber-700/50 text-[10px] text-amber-200 font-bold">🗓️ ${item.tahun}</span>` : ''}
+                        <td class="py-4 px-6">
+                            <div class="space-y-1.5">
+                                <div class="text-[11px] font-black text-purple-300 uppercase tracking-wide flex items-center"><span class="mr-1">🏢</span> ${item.sekolah}</div>
+                                <div class="flex flex-wrap gap-1.5 mt-1">
+                                    ${item.tahap && item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded border bg-emerald-950/80 border-emerald-700/50 text-[10px] text-emerald-300 font-bold shadow-inner">✅ ${item.tahap}</span>` : ''}
+                                    ${item.bulan && item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded border bg-blue-950/80 border-blue-700/50 text-[10px] text-blue-300 font-bold shadow-inner">📅 ${item.bulan}</span>` : ''}
+                                    ${item.tahun && item.tahun !== '-' ? `<span class="px-2 py-0.5 rounded border bg-amber-950/80 border-amber-700/50 text-[10px] text-amber-300 font-bold shadow-inner">🗓️ ${item.tahun}</span>` : ''}
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 px-6 text-right align-middle">
+                        <td class="py-4 px-6 text-right align-middle">
                             <div class="flex justify-end gap-2">
-                                <a href="${item.url}" target="_blank" class="inline-flex items-center px-4 py-2 ${isFolder ? 'bg-amber-900/40 hover:bg-amber-800 text-amber-200 border-amber-700/30' : 'bg-purple-900/40 hover:bg-purple-800 text-purple-200 border-purple-700/30'} rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap">
-                                    ${isFolder ? 'Buka Folder' : '👁️ Lihat File'}
+                                <a href="${item.url}" target="_blank" class="btn-3d inline-flex items-center px-4 py-2 ${isFolder ? 'bg-gradient-to-t from-amber-700 to-orange-500' : 'bg-gradient-to-t from-purple-700 to-indigo-500'} text-white rounded-xl text-xs font-bold transition whitespace-nowrap">
+                                    ${isFolder ? 'Buka Folder' : '👁️ Lihat'}
                                 </a>
                                 
                                 ${!isFolder ? `
-                                <a href="${downloadLink}" class="inline-flex items-center px-3 py-2 bg-pink-900/40 hover:bg-pink-800 text-pink-200 border-pink-700/30 rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap" title="Download Langsung">
+                                <a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">
                                     ⬇️ Unduh
                                 </a>
                                 ` : ''}
@@ -672,7 +664,7 @@
         }
 
         // ==============================================
-        // LOGIKA TAB 3: DATA SEKOLAH LENGKAP
+        // TAB DATA SEKOLAH LENGKAP
         // ==============================================
         function renderSekolahData() {
             const searchVal = document.getElementById('searchSekolah').value.toLowerCase();
@@ -684,9 +676,7 @@
             
             filesOnly.forEach(f => {
                 const schoolName = f.sekolah;
-                if(!schoolCounts[schoolName]) {
-                    schoolCounts[schoolName] = 0;
-                }
+                if(!schoolCounts[schoolName]) { schoolCounts[schoolName] = 0; }
                 schoolCounts[schoolName]++;
             });
 
@@ -694,10 +684,7 @@
                 return { namaSekolah: key, jumlah: schoolCounts[key] };
             });
 
-            if (searchVal) {
-                schoolArr = schoolArr.filter(item => item.namaSekolah.toLowerCase().includes(searchVal));
-            }
-
+            if (searchVal) schoolArr = schoolArr.filter(item => item.namaSekolah.toLowerCase().includes(searchVal));
             schoolArr.sort((a, b) => a.namaSekolah.localeCompare(b.namaSekolah));
 
             if(schoolArr.length === 0) {
@@ -709,18 +696,18 @@
                 const activeKabName = document.getElementById('filterKabSekolah').value.split('|')[1];
 
                 tbody.innerHTML = schoolArr.map(item => `
-                    <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20">
-                        <td class="py-4 px-6 font-bold text-purple-200 text-sm">
-                            <span class="mr-2 text-xl">🏢</span> ${item.namaSekolah}
+                    <tr class="hover:bg-purple-900/20 transition border-b border-purple-800/30">
+                        <td class="py-4 px-6 font-extrabold text-purple-200 text-sm drop-shadow-sm uppercase">
+                            <span class="mr-3 text-2xl drop-shadow-md">🏫</span> ${item.namaSekolah}
                         </td>
                         <td class="py-4 px-6 text-center">
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-emerald-300 border border-purple-700 shadow-inner">
-                                📄 ${item.jumlah} File Aktif
+                            <span class="inline-flex items-center px-4 py-1.5 rounded-xl text-xs font-black bg-slate-950 border-2 border-emerald-800/60 shadow-inner text-emerald-300">
+                                📄 ${item.jumlah} File Valid
                             </span>
                         </td>
                         <td class="py-4 px-6 text-right">
-                            <button onclick="lihatSekolahSpesifik('${activeFolderId}', '${activeKabName}', '${item.namaSekolah}')" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white rounded-lg text-xs font-semibold transition shadow-md whitespace-nowrap">
-                                👁️ Filter & Lihat Berkas
+                            <button onclick="lihatSekolahSpesifik('${activeFolderId}', '${activeKabName}', '${item.namaSekolah}')" class="btn-3d inline-flex items-center px-5 py-2.5 bg-gradient-to-t from-indigo-700 to-blue-500 text-white rounded-xl text-xs font-extrabold transition shadow-md whitespace-nowrap">
+                                🔍 CEK BERKAS INI
                             </button>
                         </td>
                     </tr>
@@ -729,7 +716,7 @@
         }
 
         // ==============================================
-        // LOGIKA TAB 4: RIWAYAT UPLOAD
+        // TAB RIWAYAT UPLOAD
         // ==============================================
         function formatDateToYMD(d) {
             const pad = n => n < 10 ? '0' + n : n;
@@ -743,9 +730,8 @@
             
             document.getElementById('historyEndDate').value = formatDateToYMD(end);
             document.getElementById('historyStartDate').value = formatDateToYMD(start);
-            
             renderHistoryData();
-            showToast("⚡ Filter diterapkan instan!");
+            showToast("⚡ Rentang Tanggal Aktif");
         }
 
         function clearDateFilter() {
@@ -774,7 +760,7 @@
                 });
             }
             
-            filtered.sort((a, b) => b.timestamp - a.timestamp);
+            filtered.sort((a, b) => b.timestamp - a.timestamp); // Urut dari Terbaru
             
             const countFileOnly = filtered.filter(f => f.format !== 'FOLDER').length;
             document.getElementById('historyCount').innerText = countFileOnly;
@@ -790,31 +776,31 @@
                     const downloadLink = item.id ? `https://drive.google.com/uc?export=download&id=${item.id}` : item.url;
 
                     return `
-                    <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20 ${isFolder ? 'bg-amber-950/10' : ''}">
-                        <td class="py-3 px-6">
-                            <div class="flex items-start space-x-3">
-                                <span class="text-2xl mt-1">${style.icon}</span>
+                    <tr class="hover:bg-purple-900/20 transition border-b border-purple-800/30 ${isFolder ? 'bg-amber-950/10' : ''}">
+                        <td class="py-4 px-6">
+                            <div class="flex items-start space-x-4">
+                                <span class="text-3xl mt-0.5 drop-shadow-md">${style.icon}</span>
                                 <div class="w-full">
-                                    <div class="${isFolder ? 'font-bold text-amber-300' : 'font-semibold text-slate-100'} text-sm break-words whitespace-normal tracking-wide leading-relaxed">${item.namaFile}</div>
-                                    <div class="text-[11px] text-slate-400 mt-1 flex items-center space-x-2">
-                                        <span class="px-1.5 py-0.5 rounded border ${style.color} text-[9px] font-bold uppercase tracking-widest">${item.format}</span>
-                                        <span class="text-xs font-bold text-purple-300 ml-1">🏢 ${item.sekolah}</span>
+                                    <div class="${isFolder ? 'font-extrabold text-amber-400' : 'font-bold text-slate-100'} text-[13px] break-words whitespace-normal leading-relaxed">${item.namaFile}</div>
+                                    <div class="text-[11px] text-slate-400 mt-2 flex items-center space-x-2">
+                                        <span class="px-2 py-0.5 rounded border ${style.color} text-[10px] font-black uppercase tracking-widest">${item.format}</span>
+                                        <span class="text-[10px] font-black text-purple-300 ml-1 bg-purple-950/50 px-2 py-0.5 rounded border border-purple-700/50">🏢 ${item.sekolah}</span>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td class="py-3 px-6 text-center">
-                            <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700/50 text-xs font-semibold text-slate-300 shadow-inner whitespace-nowrap">
+                        <td class="py-4 px-6 text-center">
+                            <div class="inline-flex items-center px-4 py-2 rounded-xl bg-slate-950 border-2 border-slate-700 shadow-inner text-xs font-bold text-slate-300 whitespace-nowrap">
                                 🕒 ${item.tanggalDisplay}
                             </div>
                         </td>
-                        <td class="py-3 px-6 text-right align-middle">
+                        <td class="py-4 px-6 text-right align-middle">
                             <div class="flex justify-end gap-2">
-                                <a href="${item.url}" target="_blank" class="inline-flex items-center px-4 py-2 ${isFolder ? 'bg-amber-900/40 hover:bg-amber-800 text-amber-200 border-amber-700/30' : 'bg-purple-900/40 hover:bg-purple-800 text-purple-200 border-purple-700/30'} rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap">
+                                <a href="${item.url}" target="_blank" class="btn-3d inline-flex items-center px-4 py-2 ${isFolder ? 'bg-gradient-to-t from-amber-700 to-orange-500' : 'bg-gradient-to-t from-purple-700 to-indigo-500'} text-white rounded-xl text-xs font-bold transition whitespace-nowrap">
                                     ${isFolder ? 'Buka Folder' : '👁️ Buka'}
                                 </a>
                                 ${!isFolder ? `
-                                <a href="${downloadLink}" class="inline-flex items-center px-3 py-2 bg-pink-900/40 hover:bg-pink-800 text-pink-200 border-pink-700/30 rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap" title="Download Langsung">
+                                <a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">
                                     ⬇️ Unduh
                                 </a>
                                 ` : ''}
@@ -855,60 +841,111 @@
             
             renderWilayah(document.getElementById('searchInput').value);
             toggleModal('editModal');
-            showToast("Link Diperbarui (Sync Background DB...)");
+            showToast("Proses Sinkronisasi Link (Di Latar Belakang)");
             
             if(!GAS_API_URL.includes("GANTI_DENGAN_URL")) {
                 fetch(GAS_API_URL, {
                     method: 'POST',
                     body: JSON.stringify({ action: 'updateLink', id: id, newUrl: newUrl })
-                }).catch(err => console.error("Sync failed:", err));
+                }).catch(err => console.log("Gagal memanggil API."));
             }
         }
 
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMsg').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 2500);
         }
 
         // ==============================================
-        // SILENT BACKGROUND PRELOADER (ZERO LOADING)
+        // CORE: SILENT BACKGROUND PRELOADER (ANTREAN 0-LOADING)
         // ==============================================
-        async function silentBackgroundSync() {
+        async function runBackgroundPreloader() {
             const syncBadge = document.getElementById('syncBadge');
             const syncText = document.getElementById('syncBadgeText');
             const syncDot = document.getElementById('syncDot');
             
             syncBadge.classList.remove('hidden');
 
-            for (let i = 0; i < driveData.length; i++) {
-                const folderId = driveData[i].folderId;
-                const kabName = driveData[i].name;
-                
-                if (!sessionStorage.getItem(`cache_v10_${folderId}`)) {
+            const queue = [...driveData]; // Salin seluruh kabupaten
+            const workersCount = 4; // Mengunduh 4 Kabupaten secara serentak agar aman di batas Google
+
+            async function worker() {
+                while(queue.length > 0) {
+                    const item = queue.shift();
                     try {
-                        syncText.innerText = `Mengunduh Data ${i+1}/${driveData.length}...`;
+                        const folderId = item.folderId;
+                        const kabName = item.name;
+                        syncText.innerText = `Menarik ${kabName}...`;
+                        
+                        // Fetch file diam-diam
                         const res = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`);
                         const data = await res.json();
+                        
                         if(data.status === 'success') {
-                            sessionStorage.setItem(`cache_v10_${folderId}`, JSON.stringify(data.data));
-                            driveData[i].count = data.total; 
-                            renderWilayah(document.getElementById('searchInput').value); // Live update angka di UI
+                            window.GLOBAL_DB[folderId] = data.data; // Simpan di memori utama aplikasi (Anti Loading)
+                            try { sessionStorage.setItem(`cache_v11_${folderId}`, JSON.stringify(data.data)); } catch(e){}
+                            item.count = data.total; 
+                            renderWilayah(document.getElementById('searchInput').value); // Angka Dashboard langsung naik otomatis
                         }
-                    } catch(e) { console.error("Background sync error on", kabName); }
+                    } catch(e) { console.log("Gagal menarik latar:", item.name); }
                 }
             }
-            
-            // Indikator Selesai
-            syncDot.classList.remove('animate-pulse');
+
+            const workers = [];
+            for(let i=0; i<workersCount; i++) workers.push(worker());
+            await Promise.all(workers);
+
+            // Indikator Selesai Sempurna
+            syncDot.classList.remove('animate-ping');
             syncDot.classList.replace('bg-amber-400', 'bg-emerald-400');
-            syncBadge.classList.replace('bg-amber-900/50', 'bg-emerald-900/50');
-            syncBadge.classList.replace('border-amber-700/50', 'border-emerald-700/50');
+            syncBadge.classList.replace('bg-amber-900/60', 'bg-emerald-900/60');
+            syncBadge.classList.replace('border-amber-500/50', 'border-emerald-500/50');
             syncBadge.classList.replace('text-amber-300', 'text-emerald-300');
-            syncText.innerText = "Sistem Data Siap (Kecepatan Instan) ⚡";
+            syncBadge.classList.replace('shadow-[0_0_10px_rgba(245,158,11,0.2)]', 'shadow-[0_0_10px_rgba(16,185,129,0.3)]');
+            syncText.innerText = "Mesin Siap! (0-Detik Loading) ⚡";
             
-            setTimeout(() => { syncBadge.classList.add('hidden'); }, 8000);
+            setTimeout(() => { syncBadge.classList.add('opacity-0'); setTimeout(()=> syncBadge.classList.add('hidden'), 500); }, 4000);
+        }
+
+        // ==============================================
+        // CORE: MESIN REAL-TIME AUTO SYNC
+        // ==============================================
+        function startRealtimeEngine() {
+            setInterval(async () => {
+                try {
+                    const res = await fetch(GAS_API_URL + "?action=getDashboard");
+                    const newData = await res.json();
+                    if(newData.status === 'success') {
+                        let hasUpdate = false;
+                        // Bandingkan data
+                        for (let newKab of newData.data) {
+                            const oldKab = driveData.find(k => k.folderId === newKab.folderId);
+                            if (oldKab && oldKab.count !== newKab.count) {
+                                // TERDETEKSI ADA DATA BARU DI GOOGLE DRIVE -> LANGSUNG FETCH FOLDERNYA SAJA (HEMAT WAKTU)
+                                const fetchRes = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${newKab.folderId}&kabName=${encodeURIComponent(newKab.name)}`);
+                                const freshData = await fetchRes.json();
+                                if(freshData.status === 'success') {
+                                    window.GLOBAL_DB[newKab.folderId] = freshData.data;
+                                    try { sessionStorage.setItem(`cache_v11_${newKab.folderId}`, JSON.stringify(freshData.data)); } catch(e){}
+                                    oldKab.count = freshData.total;
+                                    hasUpdate = true;
+                                }
+                            }
+                        }
+                        if (hasUpdate) {
+                            renderWilayah(document.getElementById('searchInput').value); // Update angka luar
+                            // Jika user sedang buka tab database dan yang update adalah folder yang sedang dibuka, refresh otomatis layar
+                            const activeTab = localStorage.getItem('activeViewTab');
+                            if(activeTab !== 'dashboard' && document.getElementById('filterKabupaten').value) {
+                                loadSmartFiles(activeTab);
+                            }
+                            showToast("🔄 Data Baru Masuk! Layar Disinkronkan Otomatis.");
+                        }
+                    }
+                } catch(e) {}
+            }, 15000); // Mengecek setiap 15 Detik
         }
 
         window.onload = () => {
@@ -923,16 +960,23 @@
                         renderWilayah(document.getElementById('searchInput').value);
                         populateKabupatenSelect();
                         
-                        // Menjalankan preloader latar belakang secara otomatis (ZERO LOADING)
-                        silentBackgroundSync();
-
+                        // JALANKAN MESIN 0-LOADING DAN MESIN REAL-TIME SECARA PARALEL
+                        runBackgroundPreloader();
+                        startRealtimeEngine();
+                        
+                        // Muat cache lama jika user refresh layar di tab spesifik
                         const lastKab = sessionStorage.getItem('lastKabupaten');
                         if (savedTab !== 'dashboard' && lastKab) {
                             document.getElementById('filterKabupaten').value = lastKab;
-                            loadSmartFiles(savedTab);
+                            const fid = lastKab.split('|')[0];
+                            const cx = sessionStorage.getItem(`cache_v11_${fid}`);
+                            if(cx) {
+                                window.GLOBAL_DB[fid] = JSON.parse(cx);
+                                loadSmartFiles(savedTab);
+                            }
                         }
                     }
-                }).catch(e => console.log("Gagal menarik data Dashboard."));
+                }).catch(e => console.log("Gagal terkoneksi ke Server Aplikasi."));
         };
     </script>
 </body>
