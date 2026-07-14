@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Enterprise V11 (3D Fast Engine)</title>
+    <title>Drive Matrix Dashboard - Enterprise V12 (Isolated Filters & Zero Loading)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* TEMA 3D MODERN ENTERPRISE */
         body {
             background: linear-gradient(135deg, #090514 0%, #1e1b4b 50%, #0a061c 100%);
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -22,7 +21,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        /* 3D Button Dynamics */
         .btn-3d {
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 0 0 rgba(0,0,0,0.5), 0 8px 15px 0 rgba(0,0,0,0.4);
@@ -32,7 +30,6 @@
             box-shadow: 0 0px 0 0 rgba(0,0,0,0.5), 0 2px 4px 0 rgba(0,0,0,0.4);
         }
         
-        /* 3D Card Dynamics */
         .card-3d {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 6px 0 0 rgba(0,0,0,0.3), 0 15px 25px 0 rgba(0,0,0,0.4);
@@ -73,14 +70,19 @@
                 </div>
                 <div>
                     <h1 class="font-bold text-xl md:text-2xl tracking-wide bg-gradient-to-r from-purple-300 via-fuchsia-300 to-indigo-300 bg-clip-text text-transparent drop-shadow-sm">DRIVE MATRIX</h1>
-                    <p class="text-xs text-purple-300/80 font-medium">Enterprise Fast Engine &bull; Zero Loading</p>
+                    <p class="text-xs text-purple-300/80 font-medium">Enterprise Engine &bull; Zero Loading</p>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                <span id="syncBadge" class="hidden sm:inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-amber-900/60 text-amber-300 border border-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.2)] transition-all">
-                    <span id="syncDot" class="w-2 h-2 mr-2 rounded-full bg-amber-400 animate-ping"></span>
-                    <span id="syncBadgeText">Mengunduh Database...</span>
-                </span>
+                <div id="syncBadge" class="hidden sm:flex flex-col items-center justify-center relative overflow-hidden px-4 py-1.5 rounded-xl bg-amber-900/60 border border-amber-500/50 shadow-[0_0_10px_rgba(245,158,11,0.2)] transition-all">
+                    <div class="flex items-center">
+                        <span id="syncDot" class="w-2 h-2 mr-2 rounded-full bg-amber-400 animate-ping"></span>
+                        <span id="syncBadgeText" class="text-xs font-bold text-amber-300">Cek Data Baru...</span>
+                    </div>
+                    <div class="w-full h-1 bg-amber-950/80 mt-1 rounded-full overflow-hidden">
+                        <div id="syncProgress" class="h-full bg-amber-400 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                </div>
                 <button onclick="promptAdmin()" id="adminBtn" class="btn-3d p-2.5 rounded-xl bg-slate-800 border border-slate-600 text-center" title="Login Admin">
                     <span class="text-lg">🔒</span>
                 </button>
@@ -172,6 +174,11 @@
                 </div>
             </section>
 
+            <div id="loadingScanner" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3 border border-purple-500">
+                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Database Berkas...</p>
+            </div>
+
             <section id="smartSummaryPanel" class="hidden card-3d bg-slate-900/60 p-5 rounded-2xl border border-amber-900/30">
                 <div class="font-extrabold text-amber-400 mb-3 text-sm flex items-center tracking-wide">
                     <span class="mr-2 text-lg">🎛️</span> PANEL FILTER CEPAT <span class="text-slate-500 ml-2 font-medium normal-case">(Klik tombol untuk menyaring)</span>
@@ -198,7 +205,6 @@
                 <div id="emptyBerkas" class="hidden p-12 text-center">
                     <div class="text-6xl mb-4 opacity-50">📂</div>
                     <p class="text-slate-300 font-bold text-lg">Tidak ada data ditemukan</p>
-                    <p class="text-slate-500 text-sm mt-1">Coba ubah kata kunci filter Anda.</p>
                 </div>
             </section>
         </div>
@@ -212,7 +218,7 @@
                             <option value="">-- Pilih Kabupaten --</option>
                         </select>
                         <button onclick="loadSmartFiles('sekolah')" class="btn-3d bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-110 text-white px-6 rounded-xl font-extrabold text-sm flex items-center justify-center whitespace-nowrap">
-                            🔍 LOAD
+                            🔍 TAMPILKAN
                         </button>
                     </div>
                 </div>
@@ -224,6 +230,11 @@
                     </div>
                 </div>
             </section>
+
+            <div id="loadingSekolah" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3 border border-purple-500">
+                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Data Sekolah...</p>
+            </div>
 
             <section id="sekolahTableSection" class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30 hidden">
                 <div class="overflow-x-auto">
@@ -293,6 +304,11 @@
                 </div>
             </section>
 
+            <div id="loadingHistory" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3 border border-purple-500">
+                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Data Riwayat...</p>
+            </div>
+
             <section id="historyTableSection" class="glass-panel rounded-2xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-purple-800/30 hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -352,13 +368,18 @@
 
     <script>
         // ==========================================
-        // GANTI DENGAN URL WEB APP GAS ANDA (DEPLOY BARU V11)
+        // GANTI DENGAN URL WEB APP GAS ANDA (V12)
         // ==========================================
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzJ8moC1T6BYb-Q8DwPvHy5TFl_7CrPTJX62vCyhfuca4WSHcg9E7d2TwICbPxITEwI/exec"; 
 
         let driveData = [];
-        window.GLOBAL_DB = {}; // SINGLE SOURCE OF TRUTH (0-LOADING ENGINE)
-        let activeFilesData = []; 
+        window.GLOBAL_DB = {}; 
+        
+        // Data Independen per Tab (Agar tidak Lengket/Error)
+        let activeDBFiles = []; 
+        let activeSekolahFiles = [];
+        let activeHistoryFiles = [];
+        
         let isAdmin = false;
 
         function switchTab(tab) {
@@ -396,9 +417,7 @@
                 document.getElementById('adminStatusText').classList.replace('text-slate-400', 'text-amber-400');
                 showToast("Akses Admin Terbuka");
                 renderWilayah();
-            } else if (pwd !== null) {
-                alert("Password Salah!");
-            }
+            } else if (pwd !== null) alert("Password Salah!");
         }
 
         function renderWilayah(filterStr = "") {
@@ -406,7 +425,6 @@
             const filtered = driveData.filter(item => item.name.toLowerCase().includes(filterStr.toLowerCase()));
             
             let totalFilesAll = 0;
-            
             tbody.innerHTML = filtered.map(item => {
                 totalFilesAll += (item.count || 0); 
                 return `
@@ -445,6 +463,7 @@
             renderWilayah(document.getElementById('searchInput').value);
         }
 
+        // Pintasan langsung dari Dashboard
         function scanDirect(folderId, kabName) {
             document.getElementById('filterKabupaten').value = folderId + "|" + kabName;
             document.getElementById('searchBerkas').value = ""; 
@@ -452,6 +471,7 @@
             loadSmartFiles('database');
         }
 
+        // Pintasan langsung dari Daftar Sekolah
         function lihatSekolahSpesifik(folderId, kabName, schoolName) {
             document.getElementById('filterKabupaten').value = folderId + "|" + kabName;
             document.getElementById('searchBerkas').value = schoolName; 
@@ -477,19 +497,17 @@
         }
 
         // ==============================================
-        // CORE: MULTI-TAB ZERO LOADING ENGINE (V11)
+        // CORE: MULTI-TAB ZERO LOADING & ISOLASI DATA (V12)
         // ==============================================
         function loadSmartFiles(callerTab) {
-            let selectId = 'filterKabupaten';
+            let selectId = '';
+            if (callerTab === 'database') selectId = 'filterKabupaten';
             if (callerTab === 'sekolah') selectId = 'filterKabSekolah';
             if (callerTab === 'history') selectId = 'filterKabHistory';
 
             const val = document.getElementById(selectId).value;
-            
-            document.getElementById('filterKabupaten').value = val;
-            document.getElementById('filterKabSekolah').value = val;
-            document.getElementById('filterKabHistory').value = val;
 
+            // ISOLASI FILTER: Jika dropdown di tab ini kosong, sembunyikan khusus tab ini saja!
             if(!val) {
                 if(callerTab === 'database') { document.getElementById('smartTableSection').classList.add('hidden'); document.getElementById('smartSummaryPanel').classList.add('hidden'); }
                 if(callerTab === 'sekolah') { document.getElementById('sekolahTableSection').classList.add('hidden'); }
@@ -498,59 +516,68 @@
             }
 
             const [folderId, kabName] = val.split('|');
-            sessionStorage.setItem('lastKabupaten', val);
 
-            // BACA DARI MEMORI GLOBAL (DIJAMIN 0 DETIK LOADING JIKA SUDAH DISYNC BACKGROUND)
+            // Cek di memori utama aplikasi
             if (window.GLOBAL_DB[folderId]) {
-                activeFilesData = window.GLOBAL_DB[folderId];
-                renderAllActiveTabs(callerTab);
+                assignAndRenderData(callerTab, folderId);
+                showToast("⚡ Data dimuat instan!");
                 return;
             }
 
-            // FALLBACK KE CACHE SESSION JIKA GLOBAL_DB KOSONG (Misal habis hard refresh)
-            const cachedData = sessionStorage.getItem(`cache_v11_${folderId}`);
-            if (cachedData) {
-                activeFilesData = JSON.parse(cachedData);
-                window.GLOBAL_DB[folderId] = activeFilesData; // Masukkan memori
-                renderAllActiveTabs(callerTab);
-                return;
-            }
-            
-            // JIKA BELUM ADA SAMA SEKALI (Fetch Manual)
-            showToast("⏳ Mengunduh untuk pertama kali...");
+            // Fallback manual fetch (hanya jika cache terhapus/gagal sync)
+            showLoaders(callerTab);
             fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
                 .then(res => res.json())
                 .then(res => {
                     if(res.status === 'success') {
-                        activeFilesData = res.data;
                         window.GLOBAL_DB[folderId] = res.data;
-                        try { sessionStorage.setItem(`cache_v11_${folderId}`, JSON.stringify(res.data)); } catch(e){}
+                        try {
+                            localStorage.setItem(`cache_v12_${folderId}`, JSON.stringify(res.data));
+                            localStorage.setItem(`count_v12_${folderId}`, res.total);
+                        } catch(e){}
                         
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
                         if(kabIndex > -1) driveData[kabIndex].count = res.total;
                         renderWilayah(document.getElementById('searchInput').value);
 
-                        renderAllActiveTabs(callerTab);
+                        assignAndRenderData(callerTab, folderId);
                     }
-                }).catch(e => { alert("Gagal memindai Drive."); });
+                }).catch(e => { alert("Gagal memindai Drive."); hideLoaders(callerTab); });
         }
 
-        function renderAllActiveTabs(tab) {
+        function assignAndRenderData(tab, folderId) {
+            hideLoaders(tab);
+            // ISOLASI FILTER (Setiap menu punya data aktif masing-masing)
             if (tab === 'database') {
+                activeDBFiles = window.GLOBAL_DB[folderId];
                 document.getElementById('smartTableSection').classList.remove('hidden');
-                renderSmartSummary(activeFilesData);
+                renderSmartSummary(activeDBFiles);
                 renderSmartFiles();
             } else if (tab === 'sekolah') {
+                activeSekolahFiles = window.GLOBAL_DB[folderId];
                 document.getElementById('sekolahTableSection').classList.remove('hidden');
                 renderSekolahData();
             } else if (tab === 'history') {
+                activeHistoryFiles = window.GLOBAL_DB[folderId];
                 document.getElementById('historyTableSection').classList.remove('hidden');
                 renderHistoryData();
             }
         }
 
+        function showLoaders(tab) {
+            if(tab === 'database') { document.getElementById('smartTableSection').classList.add('hidden'); document.getElementById('smartSummaryPanel').classList.add('hidden'); document.getElementById('loadingScanner').classList.remove('hidden'); }
+            if(tab === 'sekolah') { document.getElementById('sekolahTableSection').classList.add('hidden'); document.getElementById('loadingSekolah').classList.remove('hidden'); }
+            if(tab === 'history') { document.getElementById('historyTableSection').classList.add('hidden'); document.getElementById('loadingHistory').classList.remove('hidden'); document.getElementById('historyCount').innerText = "0"; }
+        }
+
+        function hideLoaders(tab) {
+            if(tab === 'database') { document.getElementById('loadingScanner').classList.add('hidden'); }
+            if(tab === 'sekolah') { document.getElementById('loadingSekolah').classList.add('hidden'); }
+            if(tab === 'history') { document.getElementById('loadingHistory').classList.add('hidden'); }
+        }
+
         // ==============================================
-        // TAB DATABASE
+        // TAB DATABASE (TERPISAH)
         // ==============================================
         function setFilter(keyword) {
             document.getElementById('searchBerkas').value = keyword;
@@ -569,7 +596,6 @@
             summaryPanel.classList.remove('hidden');
             
             let counts = { tahap: {}, bulan: {}, tahun: {} }; 
-            
             filesOnly.forEach(f => {
                 if(f.tahap && f.tahap !== '-') counts.tahap[f.tahap] = (counts.tahap[f.tahap] || 0) + 1;
                 if(f.bulan && f.bulan !== '-') counts.bulan[f.bulan] = (counts.bulan[f.bulan] || 0) + 1;
@@ -601,7 +627,7 @@
             const tbody = document.getElementById('berkasBody');
             const emptyState = document.getElementById('emptyBerkas');
             
-            const filtered = activeFilesData.filter(item => {
+            const filtered = activeDBFiles.filter(item => { // Guna data terisolasi Tab Database
                 const strTahun = (item.tahun || '').toString().toLowerCase();
                 return item.namaFile.toLowerCase().includes(searchVal) || 
                        item.sekolah.toLowerCase().includes(searchVal) ||
@@ -650,12 +676,7 @@
                                 <a href="${item.url}" target="_blank" class="btn-3d inline-flex items-center px-4 py-2 ${isFolder ? 'bg-gradient-to-t from-amber-700 to-orange-500' : 'bg-gradient-to-t from-purple-700 to-indigo-500'} text-white rounded-xl text-xs font-bold transition whitespace-nowrap">
                                     ${isFolder ? 'Buka Folder' : '👁️ Lihat'}
                                 </a>
-                                
-                                ${!isFolder ? `
-                                <a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">
-                                    ⬇️ Unduh
-                                </a>
-                                ` : ''}
+                                ${!isFolder ? `<a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">⬇️ Unduh</a>` : ''}
                             </div>
                         </td>
                     </tr>
@@ -664,16 +685,15 @@
         }
 
         // ==============================================
-        // TAB DATA SEKOLAH LENGKAP
+        // TAB DATA SEKOLAH (TERPISAH)
         // ==============================================
         function renderSekolahData() {
             const searchVal = document.getElementById('searchSekolah').value.toLowerCase();
             const tbody = document.getElementById('sekolahBody');
             const emptyState = document.getElementById('emptySekolah');
             
-            const filesOnly = activeFilesData.filter(f => f.format !== 'FOLDER');
+            const filesOnly = activeSekolahFiles.filter(f => f.format !== 'FOLDER'); // Guna data terisolasi Tab Sekolah
             const schoolCounts = {};
-            
             filesOnly.forEach(f => {
                 const schoolName = f.sekolah;
                 if(!schoolCounts[schoolName]) { schoolCounts[schoolName] = 0; }
@@ -716,7 +736,7 @@
         }
 
         // ==============================================
-        // TAB RIWAYAT UPLOAD
+        // TAB RIWAYAT UPLOAD (TERPISAH)
         // ==============================================
         function formatDateToYMD(d) {
             const pad = n => n < 10 ? '0' + n : n;
@@ -727,7 +747,6 @@
             const end = new Date();
             const start = new Date();
             start.setDate(end.getDate() - days);
-            
             document.getElementById('historyEndDate').value = formatDateToYMD(end);
             document.getElementById('historyStartDate').value = formatDateToYMD(start);
             renderHistoryData();
@@ -747,7 +766,7 @@
             const tbody = document.getElementById('historyBody');
             const emptyState = document.getElementById('emptyHistory');
             
-            let filtered = activeFilesData;
+            let filtered = activeHistoryFiles; // Guna data terisolasi Tab Riwayat
 
             if (startVal || endVal) {
                 filtered = filtered.filter(item => {
@@ -760,7 +779,7 @@
                 });
             }
             
-            filtered.sort((a, b) => b.timestamp - a.timestamp); // Urut dari Terbaru
+            filtered.sort((a, b) => b.timestamp - a.timestamp); 
             
             const countFileOnly = filtered.filter(f => f.format !== 'FOLDER').length;
             document.getElementById('historyCount').innerText = countFileOnly;
@@ -799,11 +818,7 @@
                                 <a href="${item.url}" target="_blank" class="btn-3d inline-flex items-center px-4 py-2 ${isFolder ? 'bg-gradient-to-t from-amber-700 to-orange-500' : 'bg-gradient-to-t from-purple-700 to-indigo-500'} text-white rounded-xl text-xs font-bold transition whitespace-nowrap">
                                     ${isFolder ? 'Buka Folder' : '👁️ Buka'}
                                 </a>
-                                ${!isFolder ? `
-                                <a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">
-                                    ⬇️ Unduh
-                                </a>
-                                ` : ''}
+                                ${!isFolder ? `<a href="${downloadLink}" class="btn-3d inline-flex items-center px-4 py-2 bg-gradient-to-t from-pink-700 to-rose-500 text-white rounded-xl text-xs font-bold transition whitespace-nowrap" title="Download Langsung">⬇️ Unduh</a>` : ''}
                             </div>
                         </td>
                     </tr>
@@ -841,7 +856,7 @@
             
             renderWilayah(document.getElementById('searchInput').value);
             toggleModal('editModal');
-            showToast("Proses Sinkronisasi Link (Di Latar Belakang)");
+            showToast("Proses Sinkronisasi Link...");
             
             if(!GAS_API_URL.includes("GANTI_DENGAN_URL")) {
                 fetch(GAS_API_URL, {
@@ -859,37 +874,57 @@
         }
 
         // ==============================================
-        // CORE: SILENT BACKGROUND PRELOADER (ANTREAN 0-LOADING)
+        // CORE: LOCAL STORAGE SYNC & PROGRESS BAR
         // ==============================================
         async function runBackgroundPreloader() {
             const syncBadge = document.getElementById('syncBadge');
             const syncText = document.getElementById('syncBadgeText');
             const syncDot = document.getElementById('syncDot');
+            const syncProgress = document.getElementById('syncProgress');
             
             syncBadge.classList.remove('hidden');
 
-            const queue = [...driveData]; // Salin seluruh kabupaten
-            const workersCount = 4; // Mengunduh 4 Kabupaten secara serentak agar aman di batas Google
+            const foldersToFetch = [];
+            // DIFFERENTIAL CHECK: Hanya masukkan antrean yang jumlahnya beda dengan Local Storage!
+            driveData.forEach(item => {
+                const cachedCountStr = localStorage.getItem(`count_v12_${item.folderId}`);
+                const cachedCount = cachedCountStr ? parseInt(cachedCountStr) : -1;
 
+                if (!window.GLOBAL_DB[item.folderId] || cachedCount !== item.count) {
+                    foldersToFetch.push(item);
+                }
+            });
+
+            const totalToSync = foldersToFetch.length;
+            if (totalToSync === 0) {
+                // Semua up-to-date! Zero Loading selesai seketika
+                finishSyncUI(syncBadge, syncDot, syncText, syncProgress);
+                return;
+            }
+
+            let syncedCount = 0;
+            const workersCount = 3; // Sedot 3 data sekaligus
+            
             async function worker() {
-                while(queue.length > 0) {
-                    const item = queue.shift();
+                while(foldersToFetch.length > 0) {
+                    const item = foldersToFetch.shift();
                     try {
-                        const folderId = item.folderId;
-                        const kabName = item.name;
-                        syncText.innerText = `Menarik ${kabName}...`;
-                        
-                        // Fetch file diam-diam
-                        const res = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`);
+                        syncText.innerText = `Menarik ${item.name}...`;
+                        const res = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${item.folderId}&kabName=${encodeURIComponent(item.name)}`);
                         const data = await res.json();
                         
                         if(data.status === 'success') {
-                            window.GLOBAL_DB[folderId] = data.data; // Simpan di memori utama aplikasi (Anti Loading)
-                            try { sessionStorage.setItem(`cache_v11_${folderId}`, JSON.stringify(data.data)); } catch(e){}
+                            window.GLOBAL_DB[item.folderId] = data.data; 
+                            try { 
+                                localStorage.setItem(`cache_v12_${item.folderId}`, JSON.stringify(data.data)); 
+                                localStorage.setItem(`count_v12_${item.folderId}`, data.total);
+                            } catch(e){}
                             item.count = data.total; 
-                            renderWilayah(document.getElementById('searchInput').value); // Angka Dashboard langsung naik otomatis
+                            renderWilayah(document.getElementById('searchInput').value); 
                         }
-                    } catch(e) { console.log("Gagal menarik latar:", item.name); }
+                    } catch(e) {}
+                    syncedCount++;
+                    syncProgress.style.width = Math.round((syncedCount / totalToSync) * 100) + '%';
                 }
             }
 
@@ -897,7 +932,18 @@
             for(let i=0; i<workersCount; i++) workers.push(worker());
             await Promise.all(workers);
 
-            // Indikator Selesai Sempurna
+            finishSyncUI(syncBadge, syncDot, syncText, syncProgress);
+
+            // Jika tab aktif saat ini data barunya baru saja masuk, update otomatis layarnya
+            const activeTab = localStorage.getItem('activeViewTab');
+            if (activeTab && activeTab !== 'dashboard') {
+                const targetID = activeTab === 'database' ? 'filterKabupaten' : (activeTab === 'sekolah' ? 'filterKabSekolah' : 'filterKabHistory');
+                if (document.getElementById(targetID).value) loadSmartFiles(activeTab);
+            }
+        }
+
+        function finishSyncUI(syncBadge, syncDot, syncText, syncProgress) {
+            syncProgress.style.width = '100%';
             syncDot.classList.remove('animate-ping');
             syncDot.classList.replace('bg-amber-400', 'bg-emerald-400');
             syncBadge.classList.replace('bg-amber-900/60', 'bg-emerald-900/60');
@@ -905,78 +951,51 @@
             syncBadge.classList.replace('text-amber-300', 'text-emerald-300');
             syncBadge.classList.replace('shadow-[0_0_10px_rgba(245,158,11,0.2)]', 'shadow-[0_0_10px_rgba(16,185,129,0.3)]');
             syncText.innerText = "Mesin Siap! (0-Detik Loading) ⚡";
-            
-            setTimeout(() => { syncBadge.classList.add('opacity-0'); setTimeout(()=> syncBadge.classList.add('hidden'), 500); }, 4000);
-        }
-
-        // ==============================================
-        // CORE: MESIN REAL-TIME AUTO SYNC
-        // ==============================================
-        function startRealtimeEngine() {
-            setInterval(async () => {
-                try {
-                    const res = await fetch(GAS_API_URL + "?action=getDashboard");
-                    const newData = await res.json();
-                    if(newData.status === 'success') {
-                        let hasUpdate = false;
-                        // Bandingkan data
-                        for (let newKab of newData.data) {
-                            const oldKab = driveData.find(k => k.folderId === newKab.folderId);
-                            if (oldKab && oldKab.count !== newKab.count) {
-                                // TERDETEKSI ADA DATA BARU DI GOOGLE DRIVE -> LANGSUNG FETCH FOLDERNYA SAJA (HEMAT WAKTU)
-                                const fetchRes = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${newKab.folderId}&kabName=${encodeURIComponent(newKab.name)}`);
-                                const freshData = await fetchRes.json();
-                                if(freshData.status === 'success') {
-                                    window.GLOBAL_DB[newKab.folderId] = freshData.data;
-                                    try { sessionStorage.setItem(`cache_v11_${newKab.folderId}`, JSON.stringify(freshData.data)); } catch(e){}
-                                    oldKab.count = freshData.total;
-                                    hasUpdate = true;
-                                }
-                            }
-                        }
-                        if (hasUpdate) {
-                            renderWilayah(document.getElementById('searchInput').value); // Update angka luar
-                            // Jika user sedang buka tab database dan yang update adalah folder yang sedang dibuka, refresh otomatis layar
-                            const activeTab = localStorage.getItem('activeViewTab');
-                            if(activeTab !== 'dashboard' && document.getElementById('filterKabupaten').value) {
-                                loadSmartFiles(activeTab);
-                            }
-                            showToast("🔄 Data Baru Masuk! Layar Disinkronkan Otomatis.");
-                        }
-                    }
-                } catch(e) {}
-            }, 15000); // Mengecek setiap 15 Detik
+            setTimeout(() => { syncBadge.classList.add('opacity-0'); setTimeout(()=> syncBadge.classList.add('hidden'), 500); }, 3000);
         }
 
         window.onload = () => {
             const savedTab = localStorage.getItem('activeViewTab') || 'dashboard';
             switchTab(savedTab);
 
+            // 1. Sedot semua data dari Local Storage HP/PC ke Memori Global seketika aplikasi dibuka!
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('cache_v12_')) {
+                    const folderId = key.replace('cache_v12_', '');
+                    try { window.GLOBAL_DB[folderId] = JSON.parse(localStorage.getItem(key)); } catch(e){}
+                }
+            });
+
+            // 2. Fetch Dashboard & Cek Diferensial Sinkronisasi
             fetch(GAS_API_URL + "?action=getDashboard")
                 .then(res => res.json())
                 .then(res => {
                     if(res.status === 'success' && res.data.length > 0) {
                         driveData = res.data;
+                        
+                        // Menimpa angka dashboard sementara dengan angka LocalStorage agar respons instan
+                        driveData.forEach(item => {
+                            const localCount = localStorage.getItem(`count_v12_${item.folderId}`);
+                            if(localCount && window.GLOBAL_DB[item.folderId]) item.count = parseInt(localCount);
+                        });
+
                         renderWilayah(document.getElementById('searchInput').value);
                         populateKabupatenSelect();
                         
-                        // JALANKAN MESIN 0-LOADING DAN MESIN REAL-TIME SECARA PARALEL
-                        runBackgroundPreloader();
-                        startRealtimeEngine();
-                        
-                        // Muat cache lama jika user refresh layar di tab spesifik
-                        const lastKab = sessionStorage.getItem('lastKabupaten');
-                        if (savedTab !== 'dashboard' && lastKab) {
-                            document.getElementById('filterKabupaten').value = lastKab;
-                            const fid = lastKab.split('|')[0];
-                            const cx = sessionStorage.getItem(`cache_v11_${fid}`);
-                            if(cx) {
-                                window.GLOBAL_DB[fid] = JSON.parse(cx);
+                        // 3. Muat instan Tab yang sedang terbuka (Tanpa Fetch API!)
+                        if (savedTab !== 'dashboard') {
+                            const targetID = savedTab === 'database' ? 'filterKabupaten' : (savedTab === 'sekolah' ? 'filterKabSekolah' : 'filterKabHistory');
+                            const lastKabVal = sessionStorage.getItem('lastKabupaten');
+                            if (lastKabVal) {
+                                document.getElementById(targetID).value = lastKabVal;
                                 loadSmartFiles(savedTab);
                             }
                         }
+
+                        // 4. Jalankan Latar Belakang (Mencari dan menarik update JIKA ADA yang baru saja)
+                        runBackgroundPreloader();
                     }
-                }).catch(e => console.log("Gagal terkoneksi ke Server Aplikasi."));
+                }).catch(e => console.log("Menunggu koneksi internet aktif."));
         };
     </script>
 </body>
