@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V9</title>
-    <!-- Tailwind CSS -->
+    <title>Drive Matrix Dashboard - Smart Database Engine V10</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Purple Glassmorphism Styles -->
     <style>
         body {
             background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090514 100%);
@@ -48,7 +46,6 @@
 </head>
 <body class="text-slate-100 min-h-screen pb-12">
 
-    <!-- Header / Navbar -->
     <nav class="glass-panel sticky top-0 z-50 px-4 py-4 mb-6 shadow-lg">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -61,8 +58,9 @@
                 </div>
             </div>
             <div class="flex items-center space-x-4">
-                <span class="hidden sm:inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-900/50 text-purple-300 border border-purple-700/50">
-                    <span class="w-1.5 h-1.5 mr-1.5 rounded-full bg-emerald-400 animate-pulse"></span> DB Sync Active
+                <span id="syncBadge" class="hidden sm:inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-900/50 text-amber-300 border border-amber-700/50 transition-all">
+                    <span id="syncDot" class="w-2 h-2 mr-2 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span id="syncBadgeText">Menyinkronkan Data...</span>
                 </span>
                 <button onclick="promptAdmin()" id="adminBtn" class="p-2 rounded-xl bg-slate-900/50 hover:bg-purple-800/50 border border-purple-700/30 transition shadow-sm" title="Login Admin">
                     <span class="text-lg">🔒</span>
@@ -71,10 +69,8 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 space-y-6">
         
-        <!-- Tab Navigation (4 Tabs) -->
         <div class="flex space-x-2 border-b border-purple-900/50 pb-4 overflow-x-auto">
             <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active">
                 📊 Dashboard Wilayah
@@ -90,9 +86,6 @@
             </button>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 1: DASHBOARD WILAYAH                      -->
-        <!-- ============================================== -->
         <div id="view-dashboard" class="space-y-6 block animate-[fadeIn_0.3s_ease-in-out]">
             <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-panel p-4 rounded-2xl">
@@ -129,16 +122,12 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="tableBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 2: SMART DATABASE BERKAS                  -->
-        <!-- ============================================== -->
         <div id="view-database" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
             <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
                 <div class="w-full md:w-1/3">
@@ -164,8 +153,7 @@
 
             <div id="loadingScanner" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
                 <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                <p class="text-sm font-semibold text-purple-300 animate-pulse">Sinkronisasi Database Berkas...</p>
-                <p class="text-xs text-slate-400">Proses cepat tanpa meload ulang untuk kunjungan berikutnya.</p>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Database Berkas...</p>
             </div>
 
             <section id="smartSummaryPanel" class="hidden glass-panel p-5 rounded-2xl">
@@ -173,8 +161,7 @@
                     <span class="mr-2">📊</span> Rincian File Aktual <span class="text-slate-400 ml-1 font-normal">(Klik tombol di bawah untuk Smart Filter)</span>
                 </div>
                 <div id="summaryContainer" class="flex flex-wrap gap-2.5">
-                    <!-- Injected by JS -->
-                </div>
+                    </div>
             </section>
 
             <section id="smartTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
@@ -188,8 +175,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="berkasBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 
@@ -200,9 +186,6 @@
             </section>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 3: DATA SEKOLAH LENGKAP                   -->
-        <!-- ============================================== -->
         <div id="view-sekolah" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
             <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-end">
                 <div class="w-full md:w-1/3">
@@ -241,8 +224,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="sekolahBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 
@@ -253,9 +235,6 @@
             </section>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 4: RIWAYAT UPLOAD & RANGE TANGGAL         -->
-        <!-- ============================================== -->
         <div id="view-history" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
             <section class="glass-panel p-4 rounded-2xl space-y-4 shadow-xl border border-purple-800/30">
                 <div class="flex flex-col md:flex-row gap-4 items-end">
@@ -319,8 +298,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="historyBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 
@@ -333,7 +311,6 @@
 
     </main>
 
-    <!-- Modals (Edit & Upload) -->
     <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
             <button onclick="toggleModal('editModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
@@ -362,7 +339,6 @@
         </div>
     </div>
 
-    <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-emerald-900/50 font-medium text-sm flex items-center">
         <span class="mr-2">✅</span> <span id="toastMsg">Tersimpan</span>
     </div>
@@ -439,7 +415,7 @@
                     </td>
                     <td class="py-4 px-6 text-center">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-purple-200 border border-purple-700 shadow-inner">
-                            📄 ${item.count || 0} File (Murni)
+                            📄 ${item.count || 0} File (Dokumen)
                         </span>
                     </td>
                     <td class="py-4 px-6 text-right space-x-2">
@@ -493,7 +469,7 @@
         }
 
         // ==============================================
-        // CORE: MULTI-TAB DATA LOADER (CENTRALIZED CACHE V9)
+        // CORE: MULTI-TAB DATA LOADER (CENTRALIZED CACHE V10)
         // ==============================================
         function loadSmartFiles(callerTab) {
             let selectId = 'filterKabupaten';
@@ -526,14 +502,12 @@
             const [folderId, kabName] = val.split('|');
             sessionStorage.setItem('lastKabupaten', val);
 
-            const cachedData = sessionStorage.getItem(`cache_v9_${folderId}`);
+            const cachedData = sessionStorage.getItem(`cache_v10_${folderId}`);
             
             if (cachedData) {
                 activeFilesData = JSON.parse(cachedData);
                 hideLoaders(callerTab);
                 renderAllActiveTabs(callerTab);
-                
-                // Animasi visual bahwa load itu instan
                 showToast("⚡ Data dimuat instan!");
                 return;
             }
@@ -546,7 +520,7 @@
                     hideLoaders(callerTab);
                     if(res.status === 'success') {
                         activeFilesData = res.data;
-                        sessionStorage.setItem(`cache_v9_${folderId}`, JSON.stringify(res.data));
+                        sessionStorage.setItem(`cache_v10_${folderId}`, JSON.stringify(res.data));
                         
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
                         if(kabIndex > -1) driveData[kabIndex].count = res.total;
@@ -770,7 +744,6 @@
             document.getElementById('historyEndDate').value = formatDateToYMD(end);
             document.getElementById('historyStartDate').value = formatDateToYMD(start);
             
-            // Render instan tanpa fetch ulang
             renderHistoryData();
             showToast("⚡ Filter diterapkan instan!");
         }
@@ -899,6 +872,45 @@
             setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 2500);
         }
 
+        // ==============================================
+        // SILENT BACKGROUND PRELOADER (ZERO LOADING)
+        // ==============================================
+        async function silentBackgroundSync() {
+            const syncBadge = document.getElementById('syncBadge');
+            const syncText = document.getElementById('syncBadgeText');
+            const syncDot = document.getElementById('syncDot');
+            
+            syncBadge.classList.remove('hidden');
+
+            for (let i = 0; i < driveData.length; i++) {
+                const folderId = driveData[i].folderId;
+                const kabName = driveData[i].name;
+                
+                if (!sessionStorage.getItem(`cache_v10_${folderId}`)) {
+                    try {
+                        syncText.innerText = `Mengunduh Data ${i+1}/${driveData.length}...`;
+                        const res = await fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`);
+                        const data = await res.json();
+                        if(data.status === 'success') {
+                            sessionStorage.setItem(`cache_v10_${folderId}`, JSON.stringify(data.data));
+                            driveData[i].count = data.total; 
+                            renderWilayah(document.getElementById('searchInput').value); // Live update angka di UI
+                        }
+                    } catch(e) { console.error("Background sync error on", kabName); }
+                }
+            }
+            
+            // Indikator Selesai
+            syncDot.classList.remove('animate-pulse');
+            syncDot.classList.replace('bg-amber-400', 'bg-emerald-400');
+            syncBadge.classList.replace('bg-amber-900/50', 'bg-emerald-900/50');
+            syncBadge.classList.replace('border-amber-700/50', 'border-emerald-700/50');
+            syncBadge.classList.replace('text-amber-300', 'text-emerald-300');
+            syncText.innerText = "Sistem Data Siap (Kecepatan Instan) ⚡";
+            
+            setTimeout(() => { syncBadge.classList.add('hidden'); }, 8000);
+        }
+
         window.onload = () => {
             const savedTab = localStorage.getItem('activeViewTab') || 'dashboard';
             switchTab(savedTab);
@@ -911,6 +923,9 @@
                         renderWilayah(document.getElementById('searchInput').value);
                         populateKabupatenSelect();
                         
+                        // Menjalankan preloader latar belakang secara otomatis (ZERO LOADING)
+                        silentBackgroundSync();
+
                         const lastKab = sessionStorage.getItem('lastKabupaten');
                         if (savedTab !== 'dashboard' && lastKab) {
                             document.getElementById('filterKabupaten').value = lastKab;
