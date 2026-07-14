@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V6</title>
-    <!-- Tailwind CSS -->
+    <title>Drive Matrix Dashboard - Smart Database Engine V7</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom Purple Glassmorphism Styles -->
     <style>
         body {
             background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090514 100%);
@@ -48,7 +46,6 @@
 </head>
 <body class="text-slate-100 min-h-screen pb-12">
 
-    <!-- Header / Navbar -->
     <nav class="glass-panel sticky top-0 z-50 px-4 py-4 mb-6 shadow-lg">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -71,10 +68,8 @@
         </div>
     </nav>
 
-    <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 space-y-6">
         
-        <!-- Tab Navigation (Ditambah 1 Tab: Riwayat Upload) -->
         <div class="flex space-x-2 border-b border-purple-900/50 pb-4 overflow-x-auto">
             <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active">
                 📊 Dashboard Wilayah
@@ -83,13 +78,10 @@
                 🔍 Smart Database Berkas
             </button>
             <button onclick="switchTab('history')" id="tab-history" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
-                🕒 Riwayat Upload (Baru)
+                🕒 Riwayat Upload Cerdas
             </button>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 1: DASHBOARD WILAYAH                      -->
-        <!-- ============================================== -->
         <div id="view-dashboard" class="space-y-6 block animate-[fadeIn_0.3s_ease-in-out]">
             <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-panel p-4 rounded-2xl">
@@ -126,16 +118,12 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="tableBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
             </section>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 2: SMART DATABASE BERKAS                  -->
-        <!-- ============================================== -->
         <div id="view-database" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
             <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
                 <div class="w-full md:w-1/3">
@@ -162,11 +150,10 @@
 
             <section id="smartSummaryPanel" class="hidden glass-panel p-5 rounded-2xl">
                 <div class="font-bold text-amber-400 mb-3 text-sm flex items-center">
-                    <span class="mr-2">📊</span> Rincian File <span class="text-slate-400 ml-1 font-normal">(Klik tombol di bawah untuk Smart Filter)</span>
+                    <span class="mr-2">📊</span> Rincian File Aktual <span class="text-slate-400 ml-1 font-normal">(Klik tombol di bawah untuk Smart Filter)</span>
                 </div>
                 <div id="summaryContainer" class="flex flex-wrap gap-2.5">
-                    <!-- Injected by JS -->
-                </div>
+                    </div>
             </section>
 
             <section id="smartTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
@@ -180,8 +167,7 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="berkasBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 
@@ -192,29 +178,46 @@
             </section>
         </div>
 
-        <!-- ============================================== -->
-        <!-- VIEW 3: RIWAYAT UPLOAD (NEW)                   -->
-        <!-- ============================================== -->
         <div id="view-history" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
             
-            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
-                <div class="w-full md:w-1/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Kabupaten (Sumber Riwayat)</label>
-                    <select id="filterKabHistory" onchange="loadHistoryData()" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
-                        <option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>
-                    </select>
-                </div>
-                <div class="w-full md:w-1/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Filter Berdasarkan Tanggal Upload</label>
-                    <div class="relative">
-                        <input type="date" id="filterDateHistory" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+            <section class="glass-panel p-4 rounded-2xl space-y-4 shadow-xl border border-purple-800/30">
+                <div class="flex flex-col md:flex-row gap-4 items-end">
+                    <div class="w-full md:w-1/3">
+                        <label class="text-xs text-purple-300 font-semibold mb-1 block">Kabupaten (Sumber Riwayat)</label>
+                        <select id="filterKabHistory" onchange="loadHistoryData()" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                            <option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>
+                        </select>
+                    </div>
+                    
+                    <div class="w-full md:w-2/3 flex flex-col sm:flex-row gap-2">
+                        <div class="w-full">
+                            <label class="text-xs text-purple-300 font-semibold mb-1 block">Dari Tanggal</label>
+                            <input type="date" id="historyStartDate" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                        </div>
+                        <div class="w-full flex items-center gap-2">
+                            <div class="w-full">
+                                <label class="text-xs text-purple-300 font-semibold mb-1 block">Sampai Tanggal</label>
+                                <input type="date" id="historyEndDate" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-1/4">
+                        <div class="bg-purple-900/40 border border-purple-700/50 rounded-xl px-4 py-2 text-center h-[62px] flex flex-col justify-center shadow-inner">
+                            <span class="text-2xl font-bold text-amber-400 leading-none" id="historyCount">0</span>
+                            <span class="text-[10px] text-purple-200 mt-0.5">File Ditemukan</span>
+                        </div>
                     </div>
                 </div>
-                <div class="w-full md:w-1/3">
-                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Total Data (Berdasarkan Tanggal)</label>
-                    <div class="bg-purple-900/40 border border-purple-700/50 rounded-xl px-4 py-2 text-center">
-                        <span class="text-2xl font-bold text-amber-400" id="historyCount">0</span> <span class="text-xs text-purple-200">File Ditemukan</span>
-                    </div>
+
+                <div class="flex flex-wrap items-center gap-2 pt-3 border-t border-purple-900/40">
+                    <span class="text-[11px] font-semibold text-slate-400 mr-1">Filter Instan:</span>
+                    <button onclick="setQuickDate(1)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition">1 Hari</button>
+                    <button onclick="setQuickDate(3)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition">3 Hari</button>
+                    <button onclick="setQuickDate(7)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition">7 Hari</button>
+                    <button onclick="setQuickDate(30)" class="px-3 py-1 bg-slate-800 hover:bg-purple-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition">1 Bulan</button>
+                    <div class="flex-grow"></div>
+                    <button onclick="clearDateFilter()" class="px-3 py-1 bg-slate-950 hover:bg-red-900/40 border border-slate-700 hover:border-red-500/50 rounded-lg text-xs font-semibold text-slate-400 hover:text-red-300 transition">✖ Reset Tanggal</button>
                 </div>
             </section>
 
@@ -234,32 +237,28 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="historyBody">
-                            <!-- Injected via JS -->
-                        </tbody>
+                            </tbody>
                     </table>
                 </div>
                 
                 <div id="emptyHistory" class="hidden p-8 text-center">
                     <span class="text-4xl">🕒</span>
-                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada riwayat file pada tanggal ini / Kabupaten belum ditarik.</p>
+                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada riwayat file pada rentang tanggal ini.</p>
                 </div>
             </section>
         </div>
 
     </main>
 
-    <!-- Modals (Edit & Upload) -->
     <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
             <button onclick="toggleModal('editModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
-            <h3 class="font-bold text-lg text-amber-400 flex items-center">
-                <span class="mr-2">🔓</span> Edit Link Drive
-            </h3>
+            <h3 class="font-bold text-lg text-amber-400 flex items-center"><span class="mr-2">🔓</span> Edit Link Drive</h3>
             <p class="text-xs text-slate-400 mb-2">Ubah link Google Drive untuk <span id="editWilayahName" class="font-bold text-white"></span></p>
             <input type="hidden" id="editRowId">
             <div class="space-y-1">
                 <label class="text-xs font-semibold text-purple-300">URL Link Baru:</label>
-                <input type="text" id="editUrlInput" class="w-full bg-slate-900/80 border border-purple-700/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 text-slate-200" placeholder="https://drive.google.com/...">
+                <input type="text" id="editUrlInput" class="w-full bg-slate-900/80 border border-purple-700/50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 text-slate-200">
             </div>
             <button onclick="saveEditedLink()" class="w-full py-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-sm shadow-lg shadow-orange-600/30 hover:opacity-90 transition mt-2">Simpan Perubahan & Sync DB</button>
         </div>
@@ -269,17 +268,16 @@
         <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
             <button onclick="toggleModal('uploadModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
             <h3 class="font-bold text-lg text-purple-300" id="modalTitle">Upload Berkas Wilayah</h3>
-            <p class="text-xs text-slate-400">Berkas yang Anda unggah akan otomatis terlempar ke dalam direktori Google Drive masing-masing wilayah target.</p>
+            <p class="text-xs text-slate-400">Berkas akan terlempar ke direktori Google Drive wilayah target.</p>
             <div class="border-2 border-dashed border-purple-700/40 rounded-2xl p-6 text-center bg-slate-900/40 cursor-pointer hover:border-purple-500 transition relative">
                 <span class="text-3xl block mb-2">📥</span>
                 <span class="text-xs text-purple-200 font-medium block">Pilih File atau Seret Kesini</span>
                 <input type="file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
             </div>
-            <button onclick="toggleModal('uploadModal'); showToast('Upload Berhasil via Stream!');" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-sm shadow-lg shadow-purple-600/30 hover:opacity-90 transition">Mulai Kirim ke Google Drive</button>
+            <button onclick="toggleModal('uploadModal'); showToast('Upload Berhasil!');" class="w-full py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold text-sm shadow-lg hover:opacity-90 transition">Mulai Kirim ke Google Drive</button>
         </div>
     </div>
 
-    <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-emerald-900/50 font-medium text-sm flex items-center">
         <span class="mr-2">✅</span> <span id="toastMsg">Tersimpan</span>
     </div>
@@ -292,20 +290,20 @@
 
         let driveData = [];
         let activeSmartFiles = [];
-        let activeHistoryFiles = []; // Array khusus untuk tab Riwayat
+        let activeHistoryFiles = [];
         let isAdmin = false;
 
         function switchTab(tab) {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-database').classList.add('hidden');
-            document.getElementById('view-history').classList.add('hidden'); // Sembunyikan history
+            document.getElementById('view-history').classList.add('hidden'); 
 
             document.getElementById('tab-dashboard').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             document.getElementById('tab-database').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             document.getElementById('tab-history').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             
             document.getElementById('view-' + tab).classList.remove('hidden');
-            document.getElementById('tab-' + tab).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20";
+            document.getElementById('tab-' + tab).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active";
             
             localStorage.setItem('activeViewTab', tab);
         }
@@ -340,7 +338,7 @@
             let totalFilesAll = 0;
             
             tbody.innerHTML = filtered.map(item => {
-                totalFilesAll += (item.count || 0);
+                totalFilesAll += (item.count || 0); // Disini item.count sudah dari backend (Exclude folder)
                 return `
                 <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20">
                     <td class="py-4 px-6 font-medium text-slate-200">
@@ -397,6 +395,9 @@
             });
         }
 
+        // ==============================================
+        // LOGIKA TAB DATABASE CERDAS (VIEW 2)
+        // ==============================================
         function setFilter(keyword) {
             document.getElementById('searchBerkas').value = keyword;
             renderSmartFiles();
@@ -406,7 +407,9 @@
             const summaryPanel = document.getElementById('smartSummaryPanel');
             const container = document.getElementById('summaryContainer');
             
-            if (!files || files.length === 0) {
+            // Perhitungan Smart Filter kini juga hanya menghitung File
+            const filesOnly = files.filter(f => f.format !== 'FOLDER');
+            if (!filesOnly || filesOnly.length === 0) {
                 summaryPanel.classList.add('hidden');
                 return;
             }
@@ -414,32 +417,21 @@
             
             let counts = { tahap: {}, bulan: {}, tahun: {} }; 
             
-            files.forEach(f => {
+            filesOnly.forEach(f => {
                 if(f.tahap && f.tahap !== '-') counts.tahap[f.tahap] = (counts.tahap[f.tahap] || 0) + 1;
                 if(f.bulan && f.bulan !== '-') counts.bulan[f.bulan] = (counts.bulan[f.bulan] || 0) + 1;
                 if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; 
             });
             
-            let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total Data (${files.length})</button>`;
+            let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total Data Aktual (${filesOnly.length})</button>`;
             
-            for (let t in counts.tahap) {
-                html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
-            }
-            
-            for (let b in counts.bulan) {
-                html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
-            }
-            
-            for (let th in counts.tahun) {
-                html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
-            }
+            for (let t in counts.tahap) html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
+            for (let b in counts.bulan) html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
+            for (let th in counts.tahun) html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
             
             container.innerHTML = html;
         }
 
-        // ==============================================
-        // LOGIKA UNTUK TAB DATABASE CERDAS (VIEW 2)
-        // ==============================================
         function loadSmartFiles() {
             const val = document.getElementById('filterKabupaten').value;
             const tableSection = document.getElementById('smartTableSection');
@@ -456,7 +448,7 @@
             const [folderId, kabName] = val.split('|');
             sessionStorage.setItem('lastKabupaten', val);
 
-            const cachedData = sessionStorage.getItem(`cache_v6_${folderId}`);
+            const cachedData = sessionStorage.getItem(`cache_v7_${folderId}`);
             if (cachedData) {
                 activeSmartFiles = JSON.parse(cachedData);
                 loader.classList.add('hidden');
@@ -464,7 +456,6 @@
                 renderSmartSummary(activeSmartFiles);
                 renderSmartFiles();
                 
-                // Set the dropdown in History tab to match, for continuity
                 document.getElementById('filterKabHistory').value = val;
                 return;
             }
@@ -480,10 +471,10 @@
                     tableSection.classList.remove('hidden');
                     if(res.status === 'success') {
                         activeSmartFiles = res.data;
-                        sessionStorage.setItem(`cache_v6_${folderId}`, JSON.stringify(res.data));
+                        sessionStorage.setItem(`cache_v7_${folderId}`, JSON.stringify(res.data));
                         
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
-                        if(kabIndex > -1) driveData[kabIndex].count = res.total || activeSmartFiles.length;
+                        if(kabIndex > -1) driveData[kabIndex].count = res.total;
                         renderWilayah(document.getElementById('searchInput').value);
 
                         renderSmartSummary(activeSmartFiles);
@@ -551,9 +542,9 @@
                             <div class="space-y-1">
                                 <div class="text-xs font-bold text-purple-300">🏢 ${item.sekolah}</div>
                                 <div class="flex flex-wrap gap-1 mt-1">
-                                    ${item.tahap && item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50 text-[10px] text-emerald-200 font-bold shadow-sm shadow-emerald-900/50">✅ ${item.tahap}</span>` : ''}
-                                    ${item.bulan && item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/50 text-[10px] text-blue-200 font-bold shadow-sm shadow-blue-900/50">📅 ${item.bulan}</span>` : ''}
-                                    ${item.tahun && item.tahun !== '-' ? `<span class="px-2 py-0.5 rounded bg-amber-900/60 border border-amber-700/50 text-[10px] text-amber-200 font-bold shadow-sm shadow-amber-900/50">🗓️ ${item.tahun}</span>` : ''}
+                                    ${item.tahap && item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50 text-[10px] text-emerald-200 font-bold">✅ ${item.tahap}</span>` : ''}
+                                    ${item.bulan && item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/50 text-[10px] text-blue-200 font-bold">📅 ${item.bulan}</span>` : ''}
+                                    ${item.tahun && item.tahun !== '-' ? `<span class="px-2 py-0.5 rounded bg-amber-900/60 border border-amber-700/50 text-[10px] text-amber-200 font-bold">🗓️ ${item.tahun}</span>` : ''}
                                 </div>
                             </div>
                         </td>
@@ -576,8 +567,31 @@
         }
 
         // ==============================================
-        // LOGIKA UNTUK TAB RIWAYAT UPLOAD (VIEW 3)
+        // LOGIKA TAB RIWAYAT UPLOAD & RANGE FILTER
         // ==============================================
+        
+        // Fungsi pembantu konversi tanggal untuk Quick Filter
+        function formatDateToYMD(d) {
+            const pad = n => n < 10 ? '0' + n : n;
+            return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+        }
+
+        function setQuickDate(days) {
+            const end = new Date();
+            const start = new Date();
+            start.setDate(end.getDate() - days);
+            
+            document.getElementById('historyEndDate').value = formatDateToYMD(end);
+            document.getElementById('historyStartDate').value = formatDateToYMD(start);
+            renderHistoryData();
+        }
+
+        function clearDateFilter() {
+            document.getElementById('historyStartDate').value = "";
+            document.getElementById('historyEndDate').value = "";
+            renderHistoryData();
+        }
+
         function loadHistoryData() {
             const val = document.getElementById('filterKabHistory').value;
             const tableSection = document.getElementById('historyTableSection');
@@ -591,7 +605,7 @@
             }
 
             const [folderId, kabName] = val.split('|');
-            const cachedData = sessionStorage.getItem(`cache_v6_${folderId}`);
+            const cachedData = sessionStorage.getItem(`cache_v7_${folderId}`);
             
             if (cachedData) {
                 activeHistoryFiles = JSON.parse(cachedData);
@@ -601,7 +615,6 @@
                 return;
             }
             
-            // Jika belum di-cache, fetch dulu ke backend
             tableSection.classList.add('hidden');
             loader.classList.remove('hidden');
             document.getElementById('historyCount').innerText = "0";
@@ -613,7 +626,7 @@
                     tableSection.classList.remove('hidden');
                     if(res.status === 'success') {
                         activeHistoryFiles = res.data;
-                        sessionStorage.setItem(`cache_v6_${folderId}`, JSON.stringify(res.data));
+                        sessionStorage.setItem(`cache_v7_${folderId}`, JSON.stringify(res.data));
                         renderHistoryData();
                     }
                 }).catch(e => {
@@ -623,22 +636,33 @@
         }
 
         function renderHistoryData() {
-            const dateVal = document.getElementById('filterDateHistory').value; // format: yyyy-mm-dd
+            const startVal = document.getElementById('historyStartDate').value;
+            const endVal = document.getElementById('historyEndDate').value;
+            
             const tbody = document.getElementById('historyBody');
             const emptyState = document.getElementById('emptyHistory');
             
             let filtered = activeHistoryFiles;
 
-            // 1. Filter Berdasarkan Tanggal Input
-            if (dateVal) {
-                filtered = filtered.filter(item => item.tanggalFilter === dateVal);
+            // Logika Penyaringan Rentang Tanggal (Karakter string perbandingan akurat & anti zona waktu)
+            if (startVal || endVal) {
+                filtered = filtered.filter(item => {
+                    const itemDate = item.tanggalFilter; // Format: yyyy-mm-dd
+                    if (!itemDate) return false;
+                    
+                    let pass = true;
+                    if (startVal && itemDate < startVal) pass = false;
+                    if (endVal && itemDate > endVal) pass = false;
+                    return pass;
+                });
             }
             
-            // 2. Sortir Berdasarkan Waktu Terbaru ke Terlama (Descending)
+            // Urutkan File Dari Terbaru ke Terlama
             filtered.sort((a, b) => b.timestamp - a.timestamp);
             
-            // 3. Update Jumlah Data Spesifik
-            document.getElementById('historyCount').innerText = filtered.length;
+            // Perhitungan File Khusus Riwayat (Folder tidak dihitung)
+            const countFileOnly = filtered.filter(f => f.format !== 'FOLDER').length;
+            document.getElementById('historyCount').innerText = countFileOnly;
 
             if(filtered.length === 0) {
                 tbody.innerHTML = '';
@@ -737,7 +761,6 @@
             const savedTab = localStorage.getItem('activeViewTab') || 'dashboard';
             switchTab(savedTab);
 
-            // Fetch list Dashboard & update dropdowns
             fetch(GAS_API_URL + "?action=getDashboard")
                 .then(res => res.json())
                 .then(res => {
