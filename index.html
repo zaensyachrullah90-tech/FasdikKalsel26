@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V5</title>
+    <title>Drive Matrix Dashboard - Smart Database Engine V6</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Purple Glassmorphism Styles -->
     <style>
         body {
             background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #090514 100%);
@@ -35,6 +37,7 @@
             background: rgba(147, 51, 234, 0.4);
             border-color: rgba(168, 85, 247, 0.6);
             color: white;
+            box-shadow: 0 4px 6px -1px rgba(88, 28, 135, 0.5);
         }
         .tab-inactive {
             background: rgba(30, 27, 75, 0.5);
@@ -45,6 +48,7 @@
 </head>
 <body class="text-slate-100 min-h-screen pb-12">
 
+    <!-- Header / Navbar -->
     <nav class="glass-panel sticky top-0 z-50 px-4 py-4 mb-6 shadow-lg">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -67,17 +71,25 @@
         </div>
     </nav>
 
+    <!-- Main Container -->
     <main class="max-w-7xl mx-auto px-4 space-y-6">
         
+        <!-- Tab Navigation (Ditambah 1 Tab: Riwayat Upload) -->
         <div class="flex space-x-2 border-b border-purple-900/50 pb-4 overflow-x-auto">
-            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20">
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active">
                 📊 Dashboard Wilayah
             </button>
-            <button onclick="switchTab('database')" id="tab-dashboard-db" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
+            <button onclick="switchTab('database')" id="tab-database" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
                 🔍 Smart Database Berkas
+            </button>
+            <button onclick="switchTab('history')" id="tab-history" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
+                🕒 Riwayat Upload (Baru)
             </button>
         </div>
 
+        <!-- ============================================== -->
+        <!-- VIEW 1: DASHBOARD WILAYAH                      -->
+        <!-- ============================================== -->
         <div id="view-dashboard" class="space-y-6 block animate-[fadeIn_0.3s_ease-in-out]">
             <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="glass-panel p-4 rounded-2xl">
@@ -114,14 +126,17 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="tableBody">
-                            </tbody>
+                            <!-- Injected via JS -->
+                        </tbody>
                     </table>
                 </div>
             </section>
         </div>
 
+        <!-- ============================================== -->
+        <!-- VIEW 2: SMART DATABASE BERKAS                  -->
+        <!-- ============================================== -->
         <div id="view-database" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
-            
             <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
                 <div class="w-full md:w-1/3">
                     <label class="text-xs text-purple-300 font-semibold mb-1 block">Pilih Kabupaten (Sumber Database)</label>
@@ -150,7 +165,8 @@
                     <span class="mr-2">📊</span> Rincian File <span class="text-slate-400 ml-1 font-normal">(Klik tombol di bawah untuk Smart Filter)</span>
                 </div>
                 <div id="summaryContainer" class="flex flex-wrap gap-2.5">
-                    </div>
+                    <!-- Injected by JS -->
+                </div>
             </section>
 
             <section id="smartTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
@@ -164,7 +180,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-purple-950/40 text-sm" id="berkasBody">
-                            </tbody>
+                            <!-- Injected via JS -->
+                        </tbody>
                     </table>
                 </div>
                 
@@ -174,8 +191,64 @@
                 </div>
             </section>
         </div>
+
+        <!-- ============================================== -->
+        <!-- VIEW 3: RIWAYAT UPLOAD (NEW)                   -->
+        <!-- ============================================== -->
+        <div id="view-history" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
+            
+            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
+                <div class="w-full md:w-1/3">
+                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Kabupaten (Sumber Riwayat)</label>
+                    <select id="filterKabHistory" onchange="loadHistoryData()" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                        <option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Filter Berdasarkan Tanggal Upload</label>
+                    <div class="relative">
+                        <input type="date" id="filterDateHistory" onchange="renderHistoryData()" class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3">
+                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Total Data (Berdasarkan Tanggal)</label>
+                    <div class="bg-purple-900/40 border border-purple-700/50 rounded-xl px-4 py-2 text-center">
+                        <span class="text-2xl font-bold text-amber-400" id="historyCount">0</span> <span class="text-xs text-purple-200">File Ditemukan</span>
+                    </div>
+                </div>
+            </section>
+
+            <div id="loadingHistory" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
+                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menarik Data Riwayat...</p>
+            </div>
+
+            <section id="historyTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+                                <th class="py-4 px-6 w-1/2">Nama File & Informasi</th>
+                                <th class="py-4 px-6 text-center">Waktu Upload (WITA)</th>
+                                <th class="py-4 px-6 text-right">Aksi Cepat</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-purple-950/40 text-sm" id="historyBody">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="emptyHistory" class="hidden p-8 text-center">
+                    <span class="text-4xl">🕒</span>
+                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada riwayat file pada tanggal ini / Kabupaten belum ditarik.</p>
+                </div>
+            </section>
+        </div>
+
     </main>
 
+    <!-- Modals (Edit & Upload) -->
     <div id="editModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md rounded-3xl p-6 space-y-4 relative shadow-2xl">
             <button onclick="toggleModal('editModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg">&times;</button>
@@ -206,6 +279,7 @@
         </div>
     </div>
 
+    <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-6 right-6 transform translate-y-20 opacity-0 transition-all duration-300 z-50 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-lg shadow-emerald-900/50 font-medium text-sm flex items-center">
         <span class="mr-2">✅</span> <span id="toastMsg">Tersimpan</span>
     </div>
@@ -218,17 +292,20 @@
 
         let driveData = [];
         let activeSmartFiles = [];
+        let activeHistoryFiles = []; // Array khusus untuk tab Riwayat
         let isAdmin = false;
 
         function switchTab(tab) {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-database').classList.add('hidden');
+            document.getElementById('view-history').classList.add('hidden'); // Sembunyikan history
+
             document.getElementById('tab-dashboard').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
-            document.getElementById('tab-dashboard-db').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
+            document.getElementById('tab-database').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
+            document.getElementById('tab-history').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             
             document.getElementById('view-' + tab).classList.remove('hidden');
-            let tabId = tab === 'database' ? 'tab-dashboard-db' : 'tab-dashboard';
-            document.getElementById(tabId).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20";
+            document.getElementById('tab-' + tab).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20";
             
             localStorage.setItem('activeViewTab', tab);
         }
@@ -302,20 +379,24 @@
 
         function scanDirect(folderId, kabName) {
             document.getElementById('filterKabupaten').value = folderId + "|" + kabName;
-            document.getElementById('searchBerkas').value = ""; // Reset Pencarian
+            document.getElementById('searchBerkas').value = ""; 
             switchTab('database');
             loadSmartFiles();
         }
 
         function populateKabupatenSelect() {
-            const select = document.getElementById('filterKabupaten');
-            select.innerHTML = '<option value="">-- Pilih Kabupaten (Untuk Mulai Scan AI) --</option>';
+            const selectDB = document.getElementById('filterKabupaten');
+            const selectHist = document.getElementById('filterKabHistory');
+            
+            selectDB.innerHTML = '<option value="">-- Pilih Kabupaten (Untuk Mulai Scan AI) --</option>';
+            selectHist.innerHTML = '<option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>';
+            
             driveData.forEach(item => {
-                select.innerHTML += `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
+                selectDB.innerHTML += `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
+                selectHist.innerHTML += `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
             });
         }
 
-        // --- SISTEM HITUNG OTOMATIS & SMART FILTER (NEW) ---
         function setFilter(keyword) {
             document.getElementById('searchBerkas').value = keyword;
             renderSmartFiles();
@@ -331,27 +412,24 @@
             }
             summaryPanel.classList.remove('hidden');
             
-            let counts = { tahap: {}, bulan: {}, tahun: {} }; // Tambah objek tahun
+            let counts = { tahap: {}, bulan: {}, tahun: {} }; 
             
             files.forEach(f => {
                 if(f.tahap && f.tahap !== '-') counts.tahap[f.tahap] = (counts.tahap[f.tahap] || 0) + 1;
                 if(f.bulan && f.bulan !== '-') counts.bulan[f.bulan] = (counts.bulan[f.bulan] || 0) + 1;
-                if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; // Logika tahun
+                if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; 
             });
             
             let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total Data (${files.length})</button>`;
             
-            // Render filter Tahap
             for (let t in counts.tahap) {
                 html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
             }
             
-            // Render filter Bulan
             for (let b in counts.bulan) {
                 html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
             }
             
-            // Render filter Tahun
             for (let th in counts.tahun) {
                 html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
             }
@@ -359,6 +437,9 @@
             container.innerHTML = html;
         }
 
+        // ==============================================
+        // LOGIKA UNTUK TAB DATABASE CERDAS (VIEW 2)
+        // ==============================================
         function loadSmartFiles() {
             const val = document.getElementById('filterKabupaten').value;
             const tableSection = document.getElementById('smartTableSection');
@@ -375,14 +456,16 @@
             const [folderId, kabName] = val.split('|');
             sessionStorage.setItem('lastKabupaten', val);
 
-            // Cek Session Cache di Frontend agar Instan. Ubah awalan key jadi scan_v5
-            const cachedData = sessionStorage.getItem(`cache_v5_${folderId}`);
+            const cachedData = sessionStorage.getItem(`cache_v6_${folderId}`);
             if (cachedData) {
                 activeSmartFiles = JSON.parse(cachedData);
                 loader.classList.add('hidden');
                 tableSection.classList.remove('hidden');
                 renderSmartSummary(activeSmartFiles);
                 renderSmartFiles();
+                
+                // Set the dropdown in History tab to match, for continuity
+                document.getElementById('filterKabHistory').value = val;
                 return;
             }
             
@@ -397,7 +480,7 @@
                     tableSection.classList.remove('hidden');
                     if(res.status === 'success') {
                         activeSmartFiles = res.data;
-                        sessionStorage.setItem(`cache_v5_${folderId}`, JSON.stringify(res.data));
+                        sessionStorage.setItem(`cache_v6_${folderId}`, JSON.stringify(res.data));
                         
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
                         if(kabIndex > -1) driveData[kabIndex].count = res.total || activeSmartFiles.length;
@@ -405,9 +488,11 @@
 
                         renderSmartSummary(activeSmartFiles);
                         renderSmartFiles();
+                        
+                        document.getElementById('filterKabHistory').value = val;
                     }
                 }).catch(e => {
-                    alert("Gagal memindai folder Google Drive. URL Script mungkin salah atau koneksi bermasalah.");
+                    alert("Gagal memindai folder Google Drive.");
                     loader.classList.add('hidden');
                 });
         }
@@ -429,7 +514,6 @@
             const emptyState = document.getElementById('emptyBerkas');
             
             const filtered = activeSmartFiles.filter(item => {
-                // Pastikan tahun (yang mungkin angka) di-convert ke string saat filter
                 const strTahun = (item.tahun || '').toString().toLowerCase();
                 return item.namaFile.toLowerCase().includes(searchVal) || 
                        item.sekolah.toLowerCase().includes(searchVal) ||
@@ -491,6 +575,120 @@
             }
         }
 
+        // ==============================================
+        // LOGIKA UNTUK TAB RIWAYAT UPLOAD (VIEW 3)
+        // ==============================================
+        function loadHistoryData() {
+            const val = document.getElementById('filterKabHistory').value;
+            const tableSection = document.getElementById('historyTableSection');
+            const loader = document.getElementById('loadingHistory');
+            
+            if(!val) {
+                tableSection.classList.add('hidden');
+                loader.classList.add('hidden');
+                document.getElementById('historyCount').innerText = "0";
+                return;
+            }
+
+            const [folderId, kabName] = val.split('|');
+            const cachedData = sessionStorage.getItem(`cache_v6_${folderId}`);
+            
+            if (cachedData) {
+                activeHistoryFiles = JSON.parse(cachedData);
+                loader.classList.add('hidden');
+                tableSection.classList.remove('hidden');
+                renderHistoryData();
+                return;
+            }
+            
+            // Jika belum di-cache, fetch dulu ke backend
+            tableSection.classList.add('hidden');
+            loader.classList.remove('hidden');
+            document.getElementById('historyCount').innerText = "0";
+
+            fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
+                .then(res => res.json())
+                .then(res => {
+                    loader.classList.add('hidden');
+                    tableSection.classList.remove('hidden');
+                    if(res.status === 'success') {
+                        activeHistoryFiles = res.data;
+                        sessionStorage.setItem(`cache_v6_${folderId}`, JSON.stringify(res.data));
+                        renderHistoryData();
+                    }
+                }).catch(e => {
+                    alert("Gagal memindai folder Google Drive.");
+                    loader.classList.add('hidden');
+                });
+        }
+
+        function renderHistoryData() {
+            const dateVal = document.getElementById('filterDateHistory').value; // format: yyyy-mm-dd
+            const tbody = document.getElementById('historyBody');
+            const emptyState = document.getElementById('emptyHistory');
+            
+            let filtered = activeHistoryFiles;
+
+            // 1. Filter Berdasarkan Tanggal Input
+            if (dateVal) {
+                filtered = filtered.filter(item => item.tanggalFilter === dateVal);
+            }
+            
+            // 2. Sortir Berdasarkan Waktu Terbaru ke Terlama (Descending)
+            filtered.sort((a, b) => b.timestamp - a.timestamp);
+            
+            // 3. Update Jumlah Data Spesifik
+            document.getElementById('historyCount').innerText = filtered.length;
+
+            if(filtered.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                tbody.innerHTML = filtered.map(item => {
+                    const style = getFileIconStyle(item.format);
+                    const isFolder = item.format === 'FOLDER';
+                    const downloadLink = item.id ? `https://drive.google.com/uc?export=download&id=${item.id}` : item.url;
+
+                    return `
+                    <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20 ${isFolder ? 'bg-amber-950/10' : ''}">
+                        <td class="py-3 px-6">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl mt-1">${style.icon}</span>
+                                <div class="w-full">
+                                    <div class="${isFolder ? 'font-bold text-amber-300' : 'font-semibold text-slate-100'} text-sm break-words whitespace-normal tracking-wide leading-relaxed">${item.namaFile}</div>
+                                    <div class="text-[11px] text-slate-400 mt-1 flex items-center space-x-2">
+                                        <span class="px-1.5 py-0.5 rounded border ${style.color} text-[9px] font-bold uppercase tracking-widest">${item.format}</span>
+                                        <span class="text-xs font-bold text-purple-300 ml-1">🏢 ${item.sekolah}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <div class="inline-flex items-center px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700/50 text-xs font-semibold text-slate-300 shadow-inner whitespace-nowrap">
+                                🕒 ${item.tanggalDisplay}
+                            </div>
+                        </td>
+                        <td class="py-3 px-6 text-right align-middle">
+                            <div class="flex justify-end gap-2">
+                                <a href="${item.url}" target="_blank" class="inline-flex items-center px-4 py-2 ${isFolder ? 'bg-amber-900/40 hover:bg-amber-800 text-amber-200 border-amber-700/30' : 'bg-purple-900/40 hover:bg-purple-800 text-purple-200 border-purple-700/30'} rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap">
+                                    ${isFolder ? 'Buka Folder' : '👁️ Buka'}
+                                </a>
+                                ${!isFolder ? `
+                                <a href="${downloadLink}" class="inline-flex items-center px-3 py-2 bg-pink-900/40 hover:bg-pink-800 text-pink-200 border-pink-700/30 rounded-lg text-xs font-semibold transition border shadow whitespace-nowrap" title="Download Langsung">
+                                    ⬇️ Unduh
+                                </a>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `}).join('');
+            }
+        }
+
+        // ==============================================
+        // UTILITIES & MODALS
+        // ==============================================
         function toggleModal(modalId) {
             const m = document.getElementById(modalId);
             m.classList.toggle('hidden');
@@ -539,6 +737,7 @@
             const savedTab = localStorage.getItem('activeViewTab') || 'dashboard';
             switchTab(savedTab);
 
+            // Fetch list Dashboard & update dropdowns
             fetch(GAS_API_URL + "?action=getDashboard")
                 .then(res => res.json())
                 .then(res => {
@@ -551,9 +750,12 @@
                         if (savedTab === 'database' && lastKab) {
                             document.getElementById('filterKabupaten').value = lastKab;
                             loadSmartFiles();
+                        } else if (savedTab === 'history' && lastKab) {
+                            document.getElementById('filterKabHistory').value = lastKab;
+                            loadHistoryData();
                         }
                     }
-                }).catch(e => console.log("Menunggu Web App GAS yang benar..."));
+                }).catch(e => console.log("Gagal menarik data Dashboard."));
         };
     </script>
 </body>
