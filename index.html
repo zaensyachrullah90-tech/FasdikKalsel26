@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V7</title>
+    <title>Drive Matrix Dashboard - Smart Database Engine V8</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -77,6 +77,9 @@
             <button onclick="switchTab('database')" id="tab-database" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
                 🔍 Smart Database Berkas
             </button>
+            <button onclick="switchTab('sekolah')" id="tab-sekolah" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
+                🏫 Data Sekolah (Baru)
+            </button>
             <button onclick="switchTab('history')" id="tab-history" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
                 🕒 Riwayat Upload Cerdas
             </button>
@@ -113,7 +116,7 @@
                         <thead>
                             <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
                                 <th class="py-4 px-6">Nama Wilayah / Kabupaten</th>
-                                <th class="py-4 px-6 text-center">Jumlah File Keseluruhan</th>
+                                <th class="py-4 px-6 text-center">Jumlah Data File</th>
                                 <th class="py-4 px-6 text-right">Aksi Manajemen</th>
                             </tr>
                         </thead>
@@ -128,7 +131,7 @@
             <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
                 <div class="w-full md:w-1/3">
                     <label class="text-xs text-purple-300 font-semibold mb-1 block">Pilih Kabupaten (Sumber Database)</label>
-                    <select id="filterKabupaten" onchange="loadSmartFiles()" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                    <select id="filterKabupaten" onchange="loadSmartFiles('database')" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
                         <option value="">-- Pilih Kabupaten (Mulai Scan AI) --</option>
                     </select>
                 </div>
@@ -145,7 +148,7 @@
             <div id="loadingScanner" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
                 <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
                 <p class="text-sm font-semibold text-purple-300 animate-pulse">Sinkronisasi Database Berkas...</p>
-                <p class="text-xs text-slate-400">Loading hanya butuh waktu saat pertama kali membaca data baru.</p>
+                <p class="text-xs text-slate-400">Proses cepat tanpa meload ulang untuk kunjungan berikutnya.</p>
             </div>
 
             <section id="smartSummaryPanel" class="hidden glass-panel p-5 rounded-2xl">
@@ -178,13 +181,56 @@
             </section>
         </div>
 
+        <div id="view-sekolah" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
+            <section class="glass-panel p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center">
+                <div class="w-full md:w-1/3">
+                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pilih Kabupaten (List Sekolah)</label>
+                    <select id="filterKabSekolah" onchange="loadSmartFiles('sekolah')" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                        <option value="">-- Pilih Kabupaten --</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-2/3">
+                    <label class="text-xs text-purple-300 font-semibold mb-1 block">Pencarian Nama Sekolah</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">🔍</span>
+                        <input type="text" id="searchSekolah" onkeyup="renderSekolahData()" placeholder="Cari sekolah spesifik..." class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200">
+                    </div>
+                </div>
+            </section>
+
+            <div id="loadingSekolah" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
+                <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                <p class="text-sm font-semibold text-purple-300 animate-pulse">Menghimpun Data Sekolah...</p>
+            </div>
+
+            <section id="sekolahTableSection" class="bg-slate-950/30 border border-purple-900/20 rounded-2xl overflow-hidden shadow-2xl hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-purple-950/60 border-b border-purple-900/40 text-purple-300 text-xs font-semibold uppercase tracking-wider">
+                                <th class="py-4 px-6 w-2/3">Nama Sekolah / Instansi</th>
+                                <th class="py-4 px-6 text-center">Jumlah File Aktif</th>
+                                <th class="py-4 px-6 text-right">Aksi Filter</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-purple-950/40 text-sm" id="sekolahBody">
+                            </tbody>
+                    </table>
+                </div>
+                
+                <div id="emptySekolah" class="hidden p-8 text-center">
+                    <span class="text-4xl">🏢</span>
+                    <p class="text-slate-400 mt-2 text-sm font-medium">Tidak ada data sekolah terdeteksi di wilayah ini.</p>
+                </div>
+            </section>
+        </div>
+
         <div id="view-history" class="space-y-6 hidden animate-[fadeIn_0.3s_ease-in-out]">
-            
             <section class="glass-panel p-4 rounded-2xl space-y-4 shadow-xl border border-purple-800/30">
                 <div class="flex flex-col md:flex-row gap-4 items-end">
                     <div class="w-full md:w-1/3">
                         <label class="text-xs text-purple-300 font-semibold mb-1 block">Kabupaten (Sumber Riwayat)</label>
-                        <select id="filterKabHistory" onchange="loadHistoryData()" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
+                        <select id="filterKabHistory" onchange="loadSmartFiles('history')" class="w-full bg-slate-900 border border-purple-700/50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 text-slate-200">
                             <option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>
                         </select>
                     </div>
@@ -289,17 +335,18 @@
         const GAS_API_URL = "https://script.google.com/macros/s/AKfycbzJ8moC1T6BYb-Q8DwPvHy5TFl_7CrPTJX62vCyhfuca4WSHcg9E7d2TwICbPxITEwI/exec"; 
 
         let driveData = [];
-        let activeSmartFiles = [];
-        let activeHistoryFiles = [];
+        let activeFilesData = []; // Single source of truth untuk cache
         let isAdmin = false;
 
         function switchTab(tab) {
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-database').classList.add('hidden');
+            document.getElementById('view-sekolah').classList.add('hidden');
             document.getElementById('view-history').classList.add('hidden'); 
 
             document.getElementById('tab-dashboard').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             document.getElementById('tab-database').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
+            document.getElementById('tab-sekolah').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             document.getElementById('tab-history').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             
             document.getElementById('view-' + tab).classList.remove('hidden');
@@ -338,7 +385,7 @@
             let totalFilesAll = 0;
             
             tbody.innerHTML = filtered.map(item => {
-                totalFilesAll += (item.count || 0); // Disini item.count sudah dari backend (Exclude folder)
+                totalFilesAll += (item.count || 0); 
                 return `
                 <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20">
                     <td class="py-4 px-6 font-medium text-slate-200">
@@ -353,12 +400,12 @@
                     </td>
                     <td class="py-4 px-6 text-center">
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-purple-200 border border-purple-700 shadow-inner">
-                            📄 ${item.count || 0} Keseluruhan
+                            📄 ${item.count || 0} File (Murni)
                         </span>
                     </td>
                     <td class="py-4 px-6 text-right space-x-2">
                         <button onclick="scanDirect('${item.folderId}', '${item.name}')" class="inline-flex items-center px-3 py-1.5 bg-blue-900/40 hover:bg-blue-800 text-blue-200 rounded-lg text-xs font-semibold transition border border-blue-700/30 shadow-md">
-                            🔍 <span class="hidden sm:inline ml-1">Buka & Filter DB</span>
+                            🔍 <span class="hidden sm:inline ml-1">Buka DB</span>
                         </button>
                         <button onclick="openUpload('${item.name}')" class="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90 text-white rounded-lg text-xs font-semibold transition shadow-md">
                             📤 <span class="hidden sm:inline ml-1">Upload File</span>
@@ -379,24 +426,126 @@
             document.getElementById('filterKabupaten').value = folderId + "|" + kabName;
             document.getElementById('searchBerkas').value = ""; 
             switchTab('database');
-            loadSmartFiles();
+            loadSmartFiles('database');
+        }
+
+        // FUNGSI BARU: Klik dari Tab Sekolah langsung ke Database dan Filter Sekolahnya
+        function lihatSekolahSpesifik(folderId, kabName, schoolName) {
+            document.getElementById('filterKabupaten').value = folderId + "|" + kabName;
+            document.getElementById('searchBerkas').value = schoolName; 
+            switchTab('database');
+            loadSmartFiles('database');
         }
 
         function populateKabupatenSelect() {
             const selectDB = document.getElementById('filterKabupaten');
+            const selectSekolah = document.getElementById('filterKabSekolah');
             const selectHist = document.getElementById('filterKabHistory');
             
-            selectDB.innerHTML = '<option value="">-- Pilih Kabupaten (Untuk Mulai Scan AI) --</option>';
+            selectDB.innerHTML = '<option value="">-- Pilih Kabupaten (Mulai Scan AI) --</option>';
+            selectSekolah.innerHTML = '<option value="">-- Pilih Kabupaten (Lihat List Sekolah) --</option>';
             selectHist.innerHTML = '<option value="">-- Pilih Kabupaten (Tarik Data Riwayat) --</option>';
             
             driveData.forEach(item => {
-                selectDB.innerHTML += `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
-                selectHist.innerHTML += `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
+                const opt = `<option value="${item.folderId}|${item.name}">${item.name}</option>`;
+                selectDB.innerHTML += opt;
+                selectSekolah.innerHTML += opt;
+                selectHist.innerHTML += opt;
             });
         }
 
         // ==============================================
-        // LOGIKA TAB DATABASE CERDAS (VIEW 2)
+        // CORE: MULTI-TAB DATA LOADER (CENTRALIZED CACHE V8)
+        // ==============================================
+        function loadSmartFiles(callerTab) {
+            let selectId = 'filterKabupaten';
+            if (callerTab === 'sekolah') selectId = 'filterKabSekolah';
+            if (callerTab === 'history') selectId = 'filterKabHistory';
+
+            const val = document.getElementById(selectId).value;
+            
+            // Sync all dropdowns
+            document.getElementById('filterKabupaten').value = val;
+            document.getElementById('filterKabSekolah').value = val;
+            document.getElementById('filterKabHistory').value = val;
+
+            const tableSectionDB = document.getElementById('smartTableSection');
+            const loaderDB = document.getElementById('loadingScanner');
+            const summaryPanel = document.getElementById('smartSummaryPanel');
+
+            const tableSectionSek = document.getElementById('sekolahTableSection');
+            const loaderSek = document.getElementById('loadingSekolah');
+
+            const tableSectionHist = document.getElementById('historyTableSection');
+            const loaderHist = document.getElementById('loadingHistory');
+            
+            if(!val) {
+                if(callerTab === 'database') { tableSectionDB.classList.add('hidden'); summaryPanel.classList.add('hidden'); loaderDB.classList.add('hidden'); }
+                if(callerTab === 'sekolah') { tableSectionSek.classList.add('hidden'); loaderSek.classList.add('hidden'); }
+                if(callerTab === 'history') { tableSectionHist.classList.add('hidden'); loaderHist.classList.add('hidden'); document.getElementById('historyCount').innerText = "0"; }
+                return;
+            }
+
+            const [folderId, kabName] = val.split('|');
+            sessionStorage.setItem('lastKabupaten', val);
+
+            const cachedData = sessionStorage.getItem(`cache_v8_${folderId}`);
+            
+            if (cachedData) {
+                activeFilesData = JSON.parse(cachedData);
+                hideLoaders(callerTab);
+                renderAllActiveTabs(callerTab);
+                return;
+            }
+            
+            // Fetch if not cached
+            showLoaders(callerTab);
+
+            fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
+                .then(res => res.json())
+                .then(res => {
+                    hideLoaders(callerTab);
+                    if(res.status === 'success') {
+                        activeFilesData = res.data;
+                        sessionStorage.setItem(`cache_v8_${folderId}`, JSON.stringify(res.data));
+                        
+                        const kabIndex = driveData.findIndex(k => k.folderId === folderId);
+                        if(kabIndex > -1) driveData[kabIndex].count = res.total;
+                        renderWilayah(document.getElementById('searchInput').value);
+
+                        renderAllActiveTabs(callerTab);
+                    }
+                }).catch(e => {
+                    alert("Gagal memindai folder Google Drive.");
+                    hideLoaders(callerTab);
+                });
+        }
+
+        function showLoaders(tab) {
+            if(tab === 'database') { document.getElementById('smartTableSection').classList.add('hidden'); document.getElementById('smartSummaryPanel').classList.add('hidden'); document.getElementById('loadingScanner').classList.remove('hidden'); }
+            if(tab === 'sekolah') { document.getElementById('sekolahTableSection').classList.add('hidden'); document.getElementById('loadingSekolah').classList.remove('hidden'); }
+            if(tab === 'history') { document.getElementById('historyTableSection').classList.add('hidden'); document.getElementById('loadingHistory').classList.remove('hidden'); document.getElementById('historyCount').innerText = "0"; }
+        }
+
+        function hideLoaders(tab) {
+            if(tab === 'database') { document.getElementById('smartTableSection').classList.remove('hidden'); document.getElementById('loadingScanner').classList.add('hidden'); }
+            if(tab === 'sekolah') { document.getElementById('sekolahTableSection').classList.remove('hidden'); document.getElementById('loadingSekolah').classList.add('hidden'); }
+            if(tab === 'history') { document.getElementById('historyTableSection').classList.remove('hidden'); document.getElementById('loadingHistory').classList.add('hidden'); }
+        }
+
+        function renderAllActiveTabs(tab) {
+            if (tab === 'database') {
+                renderSmartSummary(activeFilesData);
+                renderSmartFiles();
+            } else if (tab === 'sekolah') {
+                renderSekolahData();
+            } else if (tab === 'history') {
+                renderHistoryData();
+            }
+        }
+
+        // ==============================================
+        // LOGIKA TAB DATABASE CERDAS
         // ==============================================
         function setFilter(keyword) {
             document.getElementById('searchBerkas').value = keyword;
@@ -407,7 +556,6 @@
             const summaryPanel = document.getElementById('smartSummaryPanel');
             const container = document.getElementById('summaryContainer');
             
-            // Perhitungan Smart Filter kini juga hanya menghitung File
             const filesOnly = files.filter(f => f.format !== 'FOLDER');
             if (!filesOnly || filesOnly.length === 0) {
                 summaryPanel.classList.add('hidden');
@@ -423,69 +571,13 @@
                 if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; 
             });
             
-            let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total Data Aktual (${filesOnly.length})</button>`;
+            let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total File (${filesOnly.length})</button>`;
             
             for (let t in counts.tahap) html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
             for (let b in counts.bulan) html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
             for (let th in counts.tahun) html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
             
             container.innerHTML = html;
-        }
-
-        function loadSmartFiles() {
-            const val = document.getElementById('filterKabupaten').value;
-            const tableSection = document.getElementById('smartTableSection');
-            const loader = document.getElementById('loadingScanner');
-            const summaryPanel = document.getElementById('smartSummaryPanel');
-            
-            if(!val) {
-                tableSection.classList.add('hidden');
-                summaryPanel.classList.add('hidden');
-                loader.classList.add('hidden');
-                return;
-            }
-
-            const [folderId, kabName] = val.split('|');
-            sessionStorage.setItem('lastKabupaten', val);
-
-            const cachedData = sessionStorage.getItem(`cache_v7_${folderId}`);
-            if (cachedData) {
-                activeSmartFiles = JSON.parse(cachedData);
-                loader.classList.add('hidden');
-                tableSection.classList.remove('hidden');
-                renderSmartSummary(activeSmartFiles);
-                renderSmartFiles();
-                
-                document.getElementById('filterKabHistory').value = val;
-                return;
-            }
-            
-            tableSection.classList.add('hidden');
-            summaryPanel.classList.add('hidden');
-            loader.classList.remove('hidden');
-
-            fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
-                .then(res => res.json())
-                .then(res => {
-                    loader.classList.add('hidden');
-                    tableSection.classList.remove('hidden');
-                    if(res.status === 'success') {
-                        activeSmartFiles = res.data;
-                        sessionStorage.setItem(`cache_v7_${folderId}`, JSON.stringify(res.data));
-                        
-                        const kabIndex = driveData.findIndex(k => k.folderId === folderId);
-                        if(kabIndex > -1) driveData[kabIndex].count = res.total;
-                        renderWilayah(document.getElementById('searchInput').value);
-
-                        renderSmartSummary(activeSmartFiles);
-                        renderSmartFiles();
-                        
-                        document.getElementById('filterKabHistory').value = val;
-                    }
-                }).catch(e => {
-                    alert("Gagal memindai folder Google Drive.");
-                    loader.classList.add('hidden');
-                });
         }
 
         function getFileIconStyle(format) {
@@ -504,7 +596,7 @@
             const tbody = document.getElementById('berkasBody');
             const emptyState = document.getElementById('emptyBerkas');
             
-            const filtered = activeSmartFiles.filter(item => {
+            const filtered = activeFilesData.filter(item => {
                 const strTahun = (item.tahun || '').toString().toLowerCase();
                 return item.namaFile.toLowerCase().includes(searchVal) || 
                        item.sekolah.toLowerCase().includes(searchVal) ||
@@ -567,10 +659,69 @@
         }
 
         // ==============================================
-        // LOGIKA TAB RIWAYAT UPLOAD & RANGE FILTER
+        // LOGIKA TAB 3: DATA SEKOLAH (NEW)
         // ==============================================
-        
-        // Fungsi pembantu konversi tanggal untuk Quick Filter
+        function renderSekolahData() {
+            const searchVal = document.getElementById('searchSekolah').value.toLowerCase();
+            const tbody = document.getElementById('sekolahBody');
+            const emptyState = document.getElementById('emptySekolah');
+            
+            // Hitung hanya jumlah file (Murni), hiraukan folder
+            const filesOnly = activeFilesData.filter(f => f.format !== 'FOLDER');
+            const schoolCounts = {};
+            
+            filesOnly.forEach(f => {
+                const schoolName = f.sekolah;
+                if(!schoolCounts[schoolName]) {
+                    schoolCounts[schoolName] = 0;
+                }
+                schoolCounts[schoolName]++;
+            });
+
+            // Ubah objek ke Array agar bisa disortir/filter
+            let schoolArr = Object.keys(schoolCounts).map(key => {
+                return { namaSekolah: key, jumlah: schoolCounts[key] };
+            });
+
+            // Filter berdasar pencarian input (jika ada)
+            if (searchVal) {
+                schoolArr = schoolArr.filter(item => item.namaSekolah.toLowerCase().includes(searchVal));
+            }
+
+            // Sortir huruf (Alphabetical A-Z)
+            schoolArr.sort((a, b) => a.namaSekolah.localeCompare(b.namaSekolah));
+
+            if(schoolArr.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                const activeFolderId = document.getElementById('filterKabSekolah').value.split('|')[0];
+                const activeKabName = document.getElementById('filterKabSekolah').value.split('|')[1];
+
+                tbody.innerHTML = schoolArr.map(item => `
+                    <tr class="hover:bg-purple-900/10 transition border-b border-purple-950/20">
+                        <td class="py-4 px-6 font-bold text-purple-200 text-sm">
+                            <span class="mr-2 text-xl">🏢</span> ${item.namaSekolah}
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-purple-950 text-emerald-300 border border-purple-700 shadow-inner">
+                                📄 ${item.jumlah} File Aktif
+                            </span>
+                        </td>
+                        <td class="py-4 px-6 text-right">
+                            <button onclick="lihatSekolahSpesifik('${activeFolderId}', '${activeKabName}', '${item.namaSekolah}')" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:opacity-90 text-white rounded-lg text-xs font-semibold transition shadow-md whitespace-nowrap">
+                                👁️ Filter & Lihat Berkas
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        }
+
+        // ==============================================
+        // LOGIKA TAB 4: RIWAYAT UPLOAD
+        // ==============================================
         function formatDateToYMD(d) {
             const pad = n => n < 10 ? '0' + n : n;
             return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -592,49 +743,6 @@
             renderHistoryData();
         }
 
-        function loadHistoryData() {
-            const val = document.getElementById('filterKabHistory').value;
-            const tableSection = document.getElementById('historyTableSection');
-            const loader = document.getElementById('loadingHistory');
-            
-            if(!val) {
-                tableSection.classList.add('hidden');
-                loader.classList.add('hidden');
-                document.getElementById('historyCount').innerText = "0";
-                return;
-            }
-
-            const [folderId, kabName] = val.split('|');
-            const cachedData = sessionStorage.getItem(`cache_v7_${folderId}`);
-            
-            if (cachedData) {
-                activeHistoryFiles = JSON.parse(cachedData);
-                loader.classList.add('hidden');
-                tableSection.classList.remove('hidden');
-                renderHistoryData();
-                return;
-            }
-            
-            tableSection.classList.add('hidden');
-            loader.classList.remove('hidden');
-            document.getElementById('historyCount').innerText = "0";
-
-            fetch(`${GAS_API_URL}?action=getSmartFiles&folderId=${folderId}&kabName=${encodeURIComponent(kabName)}`)
-                .then(res => res.json())
-                .then(res => {
-                    loader.classList.add('hidden');
-                    tableSection.classList.remove('hidden');
-                    if(res.status === 'success') {
-                        activeHistoryFiles = res.data;
-                        sessionStorage.setItem(`cache_v7_${folderId}`, JSON.stringify(res.data));
-                        renderHistoryData();
-                    }
-                }).catch(e => {
-                    alert("Gagal memindai folder Google Drive.");
-                    loader.classList.add('hidden');
-                });
-        }
-
         function renderHistoryData() {
             const startVal = document.getElementById('historyStartDate').value;
             const endVal = document.getElementById('historyEndDate').value;
@@ -642,14 +750,12 @@
             const tbody = document.getElementById('historyBody');
             const emptyState = document.getElementById('emptyHistory');
             
-            let filtered = activeHistoryFiles;
+            let filtered = activeFilesData;
 
-            // Logika Penyaringan Rentang Tanggal (Karakter string perbandingan akurat & anti zona waktu)
             if (startVal || endVal) {
                 filtered = filtered.filter(item => {
-                    const itemDate = item.tanggalFilter; // Format: yyyy-mm-dd
+                    const itemDate = item.tanggalFilter; 
                     if (!itemDate) return false;
-                    
                     let pass = true;
                     if (startVal && itemDate < startVal) pass = false;
                     if (endVal && itemDate > endVal) pass = false;
@@ -657,10 +763,9 @@
                 });
             }
             
-            // Urutkan File Dari Terbaru ke Terlama
             filtered.sort((a, b) => b.timestamp - a.timestamp);
             
-            // Perhitungan File Khusus Riwayat (Folder tidak dihitung)
+            // Hitung murni file
             const countFileOnly = filtered.filter(f => f.format !== 'FOLDER').length;
             document.getElementById('historyCount').innerText = countFileOnly;
 
@@ -770,12 +875,9 @@
                         populateKabupatenSelect();
                         
                         const lastKab = sessionStorage.getItem('lastKabupaten');
-                        if (savedTab === 'database' && lastKab) {
+                        if (savedTab !== 'dashboard' && lastKab) {
                             document.getElementById('filterKabupaten').value = lastKab;
-                            loadSmartFiles();
-                        } else if (savedTab === 'history' && lastKab) {
-                            document.getElementById('filterKabHistory').value = lastKab;
-                            loadHistoryData();
+                            loadSmartFiles(savedTab);
                         }
                     }
                 }).catch(e => console.log("Gagal menarik data Dashboard."));
