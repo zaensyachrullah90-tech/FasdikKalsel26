@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive Matrix Dashboard - Smart Database Engine V4</title>
+    <title>Drive Matrix Dashboard - Smart Database Engine V5</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -73,7 +73,7 @@
             <button onclick="switchTab('dashboard')" id="tab-dashboard" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20">
                 📊 Dashboard Wilayah
             </button>
-            <button onclick="switchTab('database')" id="tab-database" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
+            <button onclick="switchTab('database')" id="tab-dashboard-db" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30">
                 🔍 Smart Database Berkas
             </button>
         </div>
@@ -133,7 +133,7 @@
                     <label class="text-xs text-purple-300 font-semibold mb-1 block">Pencarian Nama Sekolah / Filter</label>
                     <div class="relative">
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">🔍</span>
-                        <input type="text" id="searchBerkas" onkeyup="renderSmartFiles()" placeholder="Ketik nama sekolah (misal: SDN 1 Rantau), bulan, atau tahap..." class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200 font-bold">
+                        <input type="text" id="searchBerkas" onkeyup="renderSmartFiles()" placeholder="Ketik sekolah, tahun (2024, 2026), bulan, atau tahap..." class="w-full bg-slate-950/50 border border-purple-900/50 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-purple-500 text-slate-200 font-bold">
                         <button onclick="setFilter('')" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-white" title="Hapus Filter">✖</button>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
             <div id="loadingScanner" class="hidden glass-panel p-8 rounded-2xl text-center space-y-3">
                 <div class="w-10 h-10 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
                 <p class="text-sm font-semibold text-purple-300 animate-pulse">Sinkronisasi Database Berkas...</p>
-                <p class="text-xs text-slate-400">Loading hanya butuh waktu saat pertama kali. Mohon tunggu sesaat.</p>
+                <p class="text-xs text-slate-400">Loading hanya butuh waktu saat pertama kali membaca data baru.</p>
             </div>
 
             <section id="smartSummaryPanel" class="hidden glass-panel p-5 rounded-2xl">
@@ -224,10 +224,11 @@
             document.getElementById('view-dashboard').classList.add('hidden');
             document.getElementById('view-database').classList.add('hidden');
             document.getElementById('tab-dashboard').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
-            document.getElementById('tab-database').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
+            document.getElementById('tab-dashboard-db').className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-inactive hover:bg-purple-900/30";
             
             document.getElementById('view-' + tab).classList.remove('hidden');
-            document.getElementById('tab-' + tab).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20";
+            let tabId = tab === 'database' ? 'tab-dashboard-db' : 'tab-dashboard';
+            document.getElementById(tabId).className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition border whitespace-nowrap tab-active shadow-lg shadow-purple-900/20";
             
             localStorage.setItem('activeViewTab', tab);
         }
@@ -330,24 +331,29 @@
             }
             summaryPanel.classList.remove('hidden');
             
-            let counts = { tahap: {}, bulan: {} };
+            let counts = { tahap: {}, bulan: {}, tahun: {} }; // Tambah objek tahun
             
             files.forEach(f => {
                 if(f.tahap && f.tahap !== '-') counts.tahap[f.tahap] = (counts.tahap[f.tahap] || 0) + 1;
                 if(f.bulan && f.bulan !== '-') counts.bulan[f.bulan] = (counts.bulan[f.bulan] || 0) + 1;
+                if(f.tahun && f.tahun !== '-') counts.tahun[f.tahun] = (counts.tahun[f.tahun] || 0) + 1; // Logika tahun
             });
             
-            // Tombol Total
             let html = `<button onclick="setFilter('')" class="px-4 py-1.5 bg-purple-900 hover:bg-purple-700 border-2 border-purple-500 rounded-full text-purple-100 font-bold transition shadow-lg hover:scale-105">📁 Total Data (${files.length})</button>`;
             
-            // Tombol Tahap
+            // Render filter Tahap
             for (let t in counts.tahap) {
                 html += `<button onclick="setFilter('${t}')" class="px-4 py-1.5 bg-emerald-950 hover:bg-emerald-800 border border-emerald-600 rounded-full text-emerald-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">✅</span> ${t} (${counts.tahap[t]})</button>`;
             }
             
-            // Tombol Bulan
+            // Render filter Bulan
             for (let b in counts.bulan) {
                 html += `<button onclick="setFilter('${b}')" class="px-4 py-1.5 bg-blue-950 hover:bg-blue-800 border border-blue-600 rounded-full text-blue-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">📅</span> ${b} (${counts.bulan[b]})</button>`;
+            }
+            
+            // Render filter Tahun
+            for (let th in counts.tahun) {
+                html += `<button onclick="setFilter('${th}')" class="px-4 py-1.5 bg-amber-950 hover:bg-amber-800 border border-amber-600 rounded-full text-amber-200 font-semibold transition shadow hover:scale-105 flex items-center"><span class="mr-1">🗓️</span> ${th} (${counts.tahun[th]})</button>`;
             }
             
             container.innerHTML = html;
@@ -369,8 +375,8 @@
             const [folderId, kabName] = val.split('|');
             sessionStorage.setItem('lastKabupaten', val);
 
-            // Cek Session Cache di Frontend agar Instan
-            const cachedData = sessionStorage.getItem(`cache_${folderId}`);
+            // Cek Session Cache di Frontend agar Instan. Ubah awalan key jadi scan_v5
+            const cachedData = sessionStorage.getItem(`cache_v5_${folderId}`);
             if (cachedData) {
                 activeSmartFiles = JSON.parse(cachedData);
                 loader.classList.add('hidden');
@@ -391,9 +397,8 @@
                     tableSection.classList.remove('hidden');
                     if(res.status === 'success') {
                         activeSmartFiles = res.data;
-                        sessionStorage.setItem(`cache_${folderId}`, JSON.stringify(res.data));
+                        sessionStorage.setItem(`cache_v5_${folderId}`, JSON.stringify(res.data));
                         
-                        // Update angka di dashboard driveData secara lokal (Background Sync)
                         const kabIndex = driveData.findIndex(k => k.folderId === folderId);
                         if(kabIndex > -1) driveData[kabIndex].count = res.total || activeSmartFiles.length;
                         renderWilayah(document.getElementById('searchInput').value);
@@ -402,7 +407,7 @@
                         renderSmartFiles();
                     }
                 }).catch(e => {
-                    alert("Gagal memindai folder Google Drive. URL Script mungkin salah.");
+                    alert("Gagal memindai folder Google Drive. URL Script mungkin salah atau koneksi bermasalah.");
                     loader.classList.add('hidden');
                 });
         }
@@ -423,13 +428,16 @@
             const tbody = document.getElementById('berkasBody');
             const emptyState = document.getElementById('emptyBerkas');
             
-            const filtered = activeSmartFiles.filter(item => 
-                item.namaFile.toLowerCase().includes(searchVal) || 
-                item.sekolah.toLowerCase().includes(searchVal) ||
-                item.tahap.toLowerCase().includes(searchVal) ||
-                item.bulan.toLowerCase().includes(searchVal) ||
-                item.format.toLowerCase().includes(searchVal)
-            );
+            const filtered = activeSmartFiles.filter(item => {
+                // Pastikan tahun (yang mungkin angka) di-convert ke string saat filter
+                const strTahun = (item.tahun || '').toString().toLowerCase();
+                return item.namaFile.toLowerCase().includes(searchVal) || 
+                       item.sekolah.toLowerCase().includes(searchVal) ||
+                       item.tahap.toLowerCase().includes(searchVal) ||
+                       item.bulan.toLowerCase().includes(searchVal) ||
+                       strTahun.includes(searchVal) || 
+                       item.format.toLowerCase().includes(searchVal);
+            });
 
             if(filtered.length === 0) {
                 tbody.innerHTML = '';
@@ -439,7 +447,6 @@
                 tbody.innerHTML = filtered.map(item => {
                     const style = getFileIconStyle(item.format);
                     const isFolder = item.format === 'FOLDER';
-                    
                     const downloadLink = item.id ? `https://drive.google.com/uc?export=download&id=${item.id}` : item.url;
 
                     return `
@@ -460,8 +467,9 @@
                             <div class="space-y-1">
                                 <div class="text-xs font-bold text-purple-300">🏢 ${item.sekolah}</div>
                                 <div class="flex flex-wrap gap-1 mt-1">
-                                    ${item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50 text-[10px] text-emerald-200 font-bold shadow-sm shadow-emerald-900/50">✅ ${item.tahap}</span>` : ''}
-                                    ${item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/50 text-[10px] text-blue-200 font-bold shadow-sm shadow-blue-900/50">📅 ${item.bulan}</span>` : ''}
+                                    ${item.tahap && item.tahap !== '-' ? `<span class="px-2 py-0.5 rounded bg-emerald-900/60 border border-emerald-700/50 text-[10px] text-emerald-200 font-bold shadow-sm shadow-emerald-900/50">✅ ${item.tahap}</span>` : ''}
+                                    ${item.bulan && item.bulan !== '-' ? `<span class="px-2 py-0.5 rounded bg-blue-900/60 border border-blue-700/50 text-[10px] text-blue-200 font-bold shadow-sm shadow-blue-900/50">📅 ${item.bulan}</span>` : ''}
+                                    ${item.tahun && item.tahun !== '-' ? `<span class="px-2 py-0.5 rounded bg-amber-900/60 border border-amber-700/50 text-[10px] text-amber-200 font-bold shadow-sm shadow-amber-900/50">🗓️ ${item.tahun}</span>` : ''}
                                 </div>
                             </div>
                         </td>
